@@ -1,12 +1,43 @@
 #import "FKP1.h"
 #import <objc/runtime.h>
 
+@interface SupplierP1 : FKP1 {
+    FKFunction *f;
+    id argument;
+}
+
+- (SupplierP1 *)initWithFunction:(FKFunction *)fu argument:(id)a;
+@end
+
+@implementation SupplierP1
+
+- (void)dealloc {
+    [f release];
+    [argument release];
+    [super dealloc];
+}
+
+- (SupplierP1 *)initWithFunction:(FKFunction *)fu argument:(id)a {
+    if ((self = [super init])) {
+        f = [fu retain];
+        argument = [a retain];
+    }
+    
+    return self;
+}
+
+- (id)_1 {
+    return [f :argument];
+}
+
+@end
+
 @implementation FKP1
 
 @synthesize _1;
 
-+ (FKP1 *)p1With_1:(id)_1 {
-    return [[[FKP1 alloc] initWith_1:_1] autorelease];
++ (FKP1 *)supplierWithFunction:(FKFunction *)f argument:(id)arg {
+    return [[[SupplierP1 alloc] initWithFunction:f argument:arg] autorelease];
 }
 
 - (void)dealloc {
@@ -14,12 +45,15 @@
     [super dealloc];
 }
 
-#pragma mark Private methods.
 - (id)initWith_1:(id)new_1 {
     if (self = [super init]) {
         _1 = [new_1 retain];
     }
     return self;
+}
+
++ (FKP1 *)p1With_1:(id)_1 {
+    return [[[FKP1 alloc] initWith_1:_1] autorelease];
 }
 
 - (NSString *)description {

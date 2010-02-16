@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
-#import <FK/FKEither.h>
+
+#import "FKEither.h"
 
 @interface NSString (FunctionalKitExtensions)
 

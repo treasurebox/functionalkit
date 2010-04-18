@@ -1,0 +1,6 @@
+KitSpec { 
+  specKit = Kit { 
+    kitName = "functionalkit", kitVersion = "0.1" 
+  }, 
+  specDependencies = []
+}

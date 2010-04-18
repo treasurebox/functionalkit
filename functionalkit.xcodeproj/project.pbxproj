@@ -188,7 +188,7 @@
 		0867D691FE84028FC02AAC07 /* functionalkit */ = {
 			isa = PBXGroup;
 			children = (
-				47C211F3117B2C8A00E28F4B /* tests */,
+				47C211F3117B2C8A00E28F4B /* test */,
 				47C21185117B2C7100E28F4B /* src */,
 				E234361C0F6F38B10018BE5D /* README.markdown */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
@@ -265,7 +265,7 @@
 			path = FK;
 			sourceTree = "<group>";
 		};
-		47C211F3117B2C8A00E28F4B /* tests */ = {
+		47C211F3117B2C8A00E28F4B /* test */ = {
 			isa = PBXGroup;
 			children = (
 				47C211F4117B2C8A00E28F4B /* Data */,
@@ -274,7 +274,7 @@
 				47C211FC117B2C8A00E28F4B /* FKFunctionTests.m */,
 				47C211FD117B2C8A00E28F4B /* FKNewtypeTests.m */,
 			);
-			path = tests;
+			path = test;
 			sourceTree = "<group>";
 		};
 		47C211F4117B2C8A00E28F4B /* Data */ = {

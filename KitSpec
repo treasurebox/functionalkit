@@ -1,6 +1,5 @@
-KitSpec { 
-  specKit = Kit { 
-    kitName = "functionalkit", kitVersion = "0.1" 
-  }, 
-  specDependencies = []
+{
+    "name": "functionalkit"
+  , "version": "0.1"
+  , "dependencies": []
 }

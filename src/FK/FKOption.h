@@ -40,6 +40,8 @@ READ BOOL isSome;
 // f should be a fucntion with the following type: a -> FKOption[b].
 - (FKOption *)bind:(id <FKFunction>)f;
 
+- (FKOption *)filter:(id <FKFunction>)f;
+
 // Returns an either projection of this optional value; |left| in a Left if this optional holds no value, or this optional's value in Right.
 - (FKEither *)toEither:(id)left;
 

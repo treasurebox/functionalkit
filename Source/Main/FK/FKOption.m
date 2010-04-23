@@ -121,6 +121,10 @@
 	return self.isSome ? [f :self.some] : self;
 }
 
+- (FKOption *)filter:(id <FKFunction>)f {
+    return (self.isSome && [f :self.some]) ? self: [FKOption none];
+}
+
 - (FKEither *)toEither:(id)left {
 	return self.isSome ? [FKEither rightWithValue:self.some] : [FKEither leftWithValue:left];
 }

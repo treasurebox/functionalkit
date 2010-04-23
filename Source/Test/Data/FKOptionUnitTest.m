@@ -72,6 +72,20 @@
 	STAssertEqualObjects(NSARRAY(@"54"), somes, nil);
 }
 
+- (BOOL)isString:(id)arg {
+    return [arg isKindOfClass:[NSString class]];
+}
+
+- (void)testFilter {
+    FKOption *o1 = [FKOption some:[NSNumber numberWithInt:5]];
+    FKOption *o2 = [FKOption some:@"Okay"];
+    
+    STAssertTrue([[[FKOption none] filter:functionTS(self, isString:)] isNone], nil);
+    STAssertTrue([[o1 filter:functionTS(self, isString:)] isNone], nil);
+    STAssertTrue([[o2 filter:functionTS(self, isString:)] isSome], nil);
+    
+}
+
 - (FKOption *)givesANone:(NSString *)str {
     return [FKOption none];
 }

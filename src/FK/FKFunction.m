@@ -26,7 +26,7 @@ READ SEL selector;
 }
 
 - (BOOL)isEqual:(id)object {
-    return object == nil || ![[object class] isEqual:[self class]] ? NO : FKEqualSelectors(self.selector, ((FKFunctionFromSelector *) object).selector);
+    return object == nil || ![[object class] isEqual:[self class]] ? NO : sel_isEqual(self.selector, ((FKFunctionFromSelector *) object).selector);
 }
 
 - (NSUInteger)hash {
@@ -64,7 +64,7 @@ READ SEL selector;
 }
 
 - (BOOL)isEqual:(id)object {
-    return object == nil || ![[object class] isEqual:[self class]] ? NO : FKEqualSelectors(self.selector, ((FKFunction2FromSelector *) object).selector);
+    return object == nil || ![[object class] isEqual:[self class]] ? NO : sel_isEqual(self.selector, ((FKFunction2FromSelector *) object).selector);
 }
 
 - (NSUInteger)hash {
@@ -114,7 +114,7 @@ READ id argument;
         return NO;
     } else {
         FKFunctionFromSelectorWithArgument *other = (FKFunctionFromSelectorWithArgument *) object;
-        return FKEqualSelectors(self.selector, other.selector) && [self.argument isEqual:other.argument];
+        return sel_isEqual(self.selector, other.selector) && [self.argument isEqual:other.argument];
     }
 }
 
@@ -167,7 +167,7 @@ READ NSObject *target;
         return NO;
     } else {
         FKFunctionFromSelectorWithTarget *other = (FKFunctionFromSelectorWithTarget *) object;
-        return FKEqualSelectors(self.selector, other.selector) && [self.target isEqual:other.target];
+        return sel_isEqual(self.selector, other.selector) && [self.target isEqual:other.target];
     }
 }
 

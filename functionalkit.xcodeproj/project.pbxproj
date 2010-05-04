@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		479C88B6118FA7BD00C91ED4 /* Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 479C88B5118FA7BD00C91ED4 /* Prefix.pch */; };
 		47C211B3117B2C7100E28F4B /* FKEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C21188117B2C7100E28F4B /* FKEffect.m */; };
 		47C211B4117B2C7100E28F4B /* FKEither.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C2118A117B2C7100E28F4B /* FKEither.m */; };
 		47C211B5117B2C7100E28F4B /* FKFunction+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C2118C117B2C7100E28F4B /* FKFunction+Common.m */; };
@@ -70,7 +71,6 @@
 		47C211EF117B2C7100E28F4B /* NSObject+FunctionalKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C211AF117B2C7100E28F4B /* NSObject+FunctionalKit.m */; };
 		47C211F0117B2C7100E28F4B /* NSString+FunctionalKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 47C211B0117B2C7100E28F4B /* NSString+FunctionalKit.h */; };
 		47C211F1117B2C7100E28F4B /* NSString+FunctionalKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C211B1117B2C7100E28F4B /* NSString+FunctionalKit.m */; };
-		47C211F2117B2C7100E28F4B /* functionalkit_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 47C211B2117B2C7100E28F4B /* functionalkit_Prefix.pch */; };
 		47C211FE117B2C8A00E28F4B /* FKEitherUnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C211F5117B2C8A00E28F4B /* FKEitherUnitTest.m */; };
 		47C211FF117B2C8A00E28F4B /* FKOptionUnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C211F6117B2C8A00E28F4B /* FKOptionUnitTest.m */; };
 		47C21200117B2C8A00E28F4B /* SupplierP1Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C211F7117B2C8A00E28F4B /* SupplierP1Test.m */; };
@@ -97,6 +97,7 @@
 
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		479C88B5118FA7BD00C91ED4 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		47C21187117B2C7100E28F4B /* FKEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKEffect.h; sourceTree = "<group>"; };
 		47C21188117B2C7100E28F4B /* FKEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKEffect.m; sourceTree = "<group>"; };
 		47C21189117B2C7100E28F4B /* FKEither.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKEither.h; sourceTree = "<group>"; };
@@ -140,7 +141,6 @@
 		47C211AF117B2C7100E28F4B /* NSObject+FunctionalKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+FunctionalKit.m"; sourceTree = "<group>"; };
 		47C211B0117B2C7100E28F4B /* NSString+FunctionalKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FunctionalKit.h"; sourceTree = "<group>"; };
 		47C211B1117B2C7100E28F4B /* NSString+FunctionalKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FunctionalKit.m"; sourceTree = "<group>"; };
-		47C211B2117B2C7100E28F4B /* functionalkit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = functionalkit_Prefix.pch; sourceTree = "<group>"; };
 		47C211F5117B2C8A00E28F4B /* FKEitherUnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKEitherUnitTest.m; sourceTree = "<group>"; };
 		47C211F6117B2C8A00E28F4B /* FKOptionUnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKOptionUnitTest.m; sourceTree = "<group>"; };
 		47C211F7117B2C8A00E28F4B /* SupplierP1Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupplierP1Test.m; sourceTree = "<group>"; };
@@ -193,6 +193,7 @@
 				E234361C0F6F38B10018BE5D /* README.markdown */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
+				479C88B5118FA7BD00C91ED4 /* Prefix.pch */,
 			);
 			name = functionalkit;
 			sourceTree = "<group>";
@@ -210,7 +211,6 @@
 			isa = PBXGroup;
 			children = (
 				47C21186117B2C7100E28F4B /* FK */,
-				47C211B2117B2C7100E28F4B /* functionalkit_Prefix.pch */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -326,7 +326,7 @@
 				47C211EC117B2C7100E28F4B /* NSInvocation+FunctionalKit.h in Headers */,
 				47C211EE117B2C7100E28F4B /* NSObject+FunctionalKit.h in Headers */,
 				47C211F0117B2C7100E28F4B /* NSString+FunctionalKit.h in Headers */,
-				47C211F2117B2C7100E28F4B /* functionalkit_Prefix.pch in Headers */,
+				479C88B6118FA7BD00C91ED4 /* Prefix.pch in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,7 +491,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/src/functionalkit_Prefix.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/Prefix.pch";
 				INSTALL_PATH = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = functionalkit;
@@ -506,7 +506,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/src/functionalkit_Prefix.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/Prefix.pch";
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = functionalkit;
 			};

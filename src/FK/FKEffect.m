@@ -56,7 +56,7 @@ READ SEL selector;
 }
 
 - (BOOL)isEqual:(id)object {
-    return object == nil || ![[object class] isEqual:[self class]] ? NO : FKEqualSelectors(self.selector, ((FKEffectFromSelector *) object).selector);
+    return object == nil || ![[object class] isEqual:[self class]] ? NO : sel_isEqual(self.selector, ((FKEffectFromSelector *) object).selector);
 }
 
 - (NSUInteger)hash {
@@ -106,7 +106,7 @@ READ id argument;
         return NO;
     } else {
         FKEffectFromSelectorWithArgument *other = (FKEffectFromSelectorWithArgument *) object;
-        return FKEqualSelectors(self.selector, other.selector) && [self.argument isEqual:other.argument];
+        return sel_isEqual(self.selector, other.selector) && [self.argument isEqual:other.argument];
     }
 }
 
@@ -159,7 +159,7 @@ READ NSObject *target;
         return NO;
     } else {
         FKEffectFromSelectorWithTarget *other = (FKEffectFromSelectorWithTarget *) object;
-        return FKEqualSelectors(self.selector, other.selector) && [self.target isEqual:other.target];
+        return sel_isEqual(self.selector, other.selector) && [self.target isEqual:other.target];
     }
 }
 

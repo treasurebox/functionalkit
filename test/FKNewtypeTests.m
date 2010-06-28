@@ -1,4 +1,4 @@
-#import "GTMSenTestCase.h"
+#import <SenTestingKit/SenTestingKit.h>
 #import "FKNewtype.h"
 
 
@@ -10,7 +10,7 @@ NEWTYPE3(Position, Person, occupier, NSString, title, NSDate, started);
 NEWTYPE2(Simple2, NSString, a, NSString, b); 
 NEWTYPE3(Simple3, NSString, a, NSString, b, NSString, c); 
 
-@interface FKNewtypeTests : GTMTestCase
+@interface FKNewtypeTests : SenTestCase
 @end
 
 @implementation FKNewtypeTests

@@ -1,8 +1,8 @@
-#import "GTMSenTestCase.h"
+#import <SenTestingKit/SenTestingKit.h>
 #import "FKP1.h"
 #import "FKFunction.h"
 
-@interface SupplierP1Test: GTMTestCase {
+@interface SupplierP1Test: SenTestCase {
     NSObject *o1;
     NSObject *o2;
     int invokeCount;

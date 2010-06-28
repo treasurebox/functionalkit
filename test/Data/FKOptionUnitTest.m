@@ -1,9 +1,9 @@
-#import "GTMSenTestCase.h"
+#import <SenTestingKit/SenTestingKit.h>
 #import "FK/FKOption.h"
 #import "FK/FKMacros.h"
 #import "FK/FKFunction.h"
 
-@interface FKOptionUnitTest : GTMTestCase {
+@interface FKOptionUnitTest : SenTestCase {
     NSObject *object;
 }
 @end

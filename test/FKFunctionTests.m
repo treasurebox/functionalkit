@@ -1,9 +1,11 @@
-#import "GTMSenTestCase.h"
+#import <SenTestingKit/SenTestingKit.h>
+
 #import "NSArray+FunctionalKit.h"
 #import "FKFunction.h"
 #import "FKEffect.h"
 #import "FKNewtype.h"
 #import "NSInvocation+FunctionalKit.h"
+
 @interface TestEffect : NSObject <FKEffect> {
 	id arg;
 }
@@ -18,7 +20,7 @@
 }
 @end
 
-@interface FKFunctionUnitTest : GTMTestCase {
+@interface FKFunctionUnitTest : SenTestCase {
     NSObject *object;
 }
 @end

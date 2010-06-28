@@ -1,10 +1,11 @@
-#import "GTMSenTestCase.h"
+#import <SenTestingKit/SenTestingKit.h>
 #import "FKFunction+Common.h"
 
-@interface FKFunctionCommonTests : GTMTestCase
+@interface FKFunctionCommonTests : SenTestCase
 @end
 
 @implementation FKFunctionCommonTests
+
 - (void)testIdentity {
 	STAssertEqualObjects(@"54", [[FKFunction identity] :@"54"], nil);
 }
@@ -14,4 +15,3 @@
 }
 
 @end
-

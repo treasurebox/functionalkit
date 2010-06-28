@@ -1,9 +1,9 @@
-#import "GTMSenTestCase.h"
+#import <SenTestingKit/SenTestingKit.h>
 #import "FK/FKEither.h"
 #import "FK/FKOption.h"
 #import "FKFunction.h"
 
-@interface FKEitherUnitTest : GTMTestCase {
+@interface FKEitherUnitTest : SenTestCase {
     NSObject *o1;
     NSObject *o2;
 }
@@ -47,19 +47,19 @@
 - (void)testTwoLeftsWithUnEqualValuesAreNotEqual {
     FKEither *l1 = [FKEither leftWithValue:o1];
     FKEither *l2 = [FKEither leftWithValue:o2];
-    STAssertNotEqualObjects(l1, l2, nil);
+    STAssertTrue([l1 isEqual:l2] == NO, nil);
 }
 
 - (void)testTwoRightsWithUnEqualValuesAreNotEqual {
     FKEither *r1 = [FKEither rightWithValue:o1];
     FKEither *r2 = [FKEither rightWithValue:o2];
-    STAssertNotEqualObjects(r1, r2, nil);
+    STAssertTrue([r1 isEqual:r2] == NO, nil);
 }
 
 - (void)testALeftAndARightAreNotEqual {
     FKEither *l = [FKEither leftWithValue:o1];
     FKEither *r = [FKEither rightWithValue:o1];
-    STAssertNotEqualObjects(l, r, nil);
+    STAssertTrue([l isEqual:r] == NO, nil);
 }
 
 - (void)testAccessingTheRightValueInLeftThrowsAnError {

@@ -1,11 +1,11 @@
-#import "GTMSenTestCase.h"
+#import <SenTestingKit/SenTestingKit.h>
 #import "FKMacros.h"
 #import "FKFunction.h"
 #import "NSArray+FunctionalKit.h"
 #import "FKP2.h"
 #import "NSString+FunctionalKit.h"
 
-@interface NSArrayExtensionsUnitTest : GTMTestCase
+@interface NSArrayExtensionsUnitTest : SenTestCase
 @end
 
 @implementation NSArrayExtensionsUnitTest
@@ -87,7 +87,7 @@
 
 - (void)testCanUniquifyAnArray {
     NSArray *array = NSARRAY(@"A", @"B", @"C", @"C", @"A", @"A", @"B");
-    STAssertEqualObjects(NSARRAY(@"B", @"A", @"C"), [array unique], nil);
+    STAssertEqualObjects(NSARRAY(@"A", @"B", @"C"), [array unique], nil);
 }
 
 - (BOOL)isStringContainingOne:(id)string {

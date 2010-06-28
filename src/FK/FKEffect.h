@@ -3,6 +3,10 @@
 
 typedef void (*fkEffect)(id);
 
+#define effectS(s) [FKEffect effectFromSelector:@selector(s)]
+#define effectTS(t, s) [FKEffect effectFromSelector:@selector(s) target:t]
+#define effectSA(s, a) [FKEffect effectFromSelector:@selector(s) withArgument:a]
+
 @protocol FKEffect <NSObject>
 - (oneway void)e:(id)arg;
 @end

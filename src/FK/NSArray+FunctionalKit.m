@@ -161,6 +161,17 @@ READ id <FKFunction> wrappedF;
 	return [NSArray arrayWithArray:r];
 }
 
+- (NSArray *)mapOption:(id <FKFunction>)f {
+	NSMutableArray *r = [NSMutableArray array];
+	for (id item in self) {
+        FKOption *o = [f :item];
+        if (o.isSome) {
+            [r addObject:o.some];
+        }
+	}
+	return [NSArray arrayWithArray:r];
+}
+
 - (void)foreach:(id <FKFunction>)f {
 	for (id item in self) {
 		[f :item];

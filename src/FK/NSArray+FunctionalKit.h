@@ -56,6 +56,9 @@ READ NSArray *tail;
 // f :: id -> id
 - (NSArray *)map:(id <FKFunction>)f;
 
+// Given, f :: id -> Option id, collect up just the results that are Some. Equivalent to [FKOption somes:[arr map:f]]
+- (NSArray *)mapOption:(id <FKFunction>)f;
+
 // Applies to given function to each item in this array. If the function returns a value it is ignored, it is assumed to be side-effecting.
 // f :: id -> void
 - (void)foreach:(id <FKFunction>)f;

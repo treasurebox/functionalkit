@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
-#import "FKMacros.h"
-#import "FKFunction.h"
+#import "FK/FKMacros.h"
+#import "FK/FKFunction.h"
 
 #define p1(a)    pair1(a)
 #define pair1(a) [FKP1 p1With_1:a]

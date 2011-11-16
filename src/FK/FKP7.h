@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "FKMacros.h"
+#import "FK/FKMacros.h"
 
 #define p7(a, b, c, d, e, f, g)    pair7(a, b, c, d, e, f, g)
 #define pair7(a, b, c, d, e, f, g) [FKP7 p7With_1:a _2:b _3:c _4:d _5:e _6:f _7:g]

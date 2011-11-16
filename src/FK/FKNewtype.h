@@ -12,17 +12,17 @@
  
  */
 
-#import "FKFunction.h"
-#import "FKOption.h"
+#import "FK/FKFunction.h"
+#import "FK/FKOption.h"
 
-#import "FKP1.h"
-#import "FKP2.h"
-#import "FKP3.h"
-#import "FKP4.h"
-#import "FKP5.h"
-#import "FKP6.h"
-#import "FKP7.h"
-#import "FKP8.h"
+#import "FK/FKP1.h"
+#import "FK/FKP2.h"
+#import "FK/FKP3.h"
+#import "FK/FKP4.h"
+#import "FK/FKP5.h"
+#import "FK/FKP6.h"
+#import "FK/FKP7.h"
+#import "FK/FKP8.h"
 
 // TODO make the contructors type check harder, so that 'id' can't be passed in
 

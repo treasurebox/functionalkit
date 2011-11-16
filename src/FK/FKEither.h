@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
-#import "FKMacros.h"
-#import "FKFunction.h"
+#import "FK/FKMacros.h"
+#import "FK/FKFunction.h"
 
 // TODO Add foreach.
 

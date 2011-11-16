@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "FKMacros.h"
+#import "FK/FKMacros.h"
 
 #define p4(a, b, c, d)    pair4(a, b, c, d)
 #define pair4(a, b, c, d) [FKP4 p4With_1:a _2:b _3:c _4:d]

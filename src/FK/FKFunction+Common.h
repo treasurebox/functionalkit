@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "FKFunction.h"
+#import "FK/FKFunction.h"
 
 @interface FKFunction (CommonFunctions)
 

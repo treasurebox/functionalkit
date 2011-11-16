@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "FKMacros.h"
+#import "FK/FKMacros.h"
 
 #define p3(a, b, c)    pair3(a, b, c)
 #define pair3(a, b, c) [FKP3 p3With_1:a _2:b _3:c]

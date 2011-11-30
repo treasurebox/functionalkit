@@ -133,6 +133,6 @@ The following example lifts a function into the array monad, applying the functi
 Here's some other work we know of that does similar things to FunctionalKit.
 
 * [More Functional Reusability in C/C++/Objective-c with Curried Functions](http://asg.unige.ch/site/papers/Dami91a.pdf)
-* [Map, filter and reduce in Objective-C/Cocoa](http://seriot.ch/blog.php?article=20090109)
+* [Map, filter and reduce in Objective-C/Cocoa](https://github.com/nst/nsarray-functional)
 * [Simple HOM](http://www.metaobject.com/blog/2009/01/simple-hom.html)
 * [Higher Order Messaging](http://cocoadev.com/index.pl?HigherOrderMessaging)

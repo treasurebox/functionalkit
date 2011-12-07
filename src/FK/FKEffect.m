@@ -51,7 +51,7 @@ READ SEL selector;
 	return self;
 }
 
-- (void) e:(id)arg {
+- (oneway void) e:(id)arg {
     [arg performSelector:selector];
 }
 
@@ -92,7 +92,7 @@ READ id argument;
 	return self;
 }
 
-- (void) e:(id)arg {
+- (oneway void) e:(id)arg {
     [arg performSelector:selector withObject:argument];
 }
 
@@ -145,7 +145,7 @@ READ NSObject *target;
 	return self;
 }
 
-- (void)e:(id)arg {
+- (oneway void)e:(id)arg {
     [target performSelector:selector withObject:arg];
 }
 
@@ -186,7 +186,7 @@ READ NSObject *target;
 	}
 	return self;
 }
-- (void) e:(id)arg {
+- (oneway void) e:(id)arg {
 	return (*theEffect)(arg);
 }
 @end

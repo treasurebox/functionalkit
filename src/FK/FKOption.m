@@ -67,7 +67,12 @@
 }
 
 + (FKOption *)none {
-    return [[[FKNone alloc] init] autorelease];
+    static FKOption *none = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        none = [FKNone new];
+    });
+    return none;
 }
 
 + (FKOption *)some:(id)someObject {

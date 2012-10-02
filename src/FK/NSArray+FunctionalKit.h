@@ -33,9 +33,17 @@ READ NSArray *tail;
 // f :: id -> BOOL
 - (BOOL)all:(id <FKFunction>)f;
 
+// Returns |YES| if any item in this array matches the given predicate.
+// f :: id -> BOOL
+- (BOOL)any:(id <FKFunction>)f;
+
 // Filters the items in this array returning only those that match the given predicate.
 // f :: id -> BOOL
 - (NSArray *)filter:(id <FKFunction>)f;
+
+// Filters the items in this array returning only those that do not match the given predicate.
+// f :: id -> BOOL
+- (NSArray *)drop:(id <FKFunction>)f;
 
 // TODO Add one like FJ's: group :: (id -> id -> BOOL) -> NSArray (takes an equality function).
 // Groups the items in this array using the given |equal|, equal objects are placed in the same array.

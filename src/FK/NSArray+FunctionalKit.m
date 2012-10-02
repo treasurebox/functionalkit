@@ -120,10 +120,29 @@ READ id <FKFunction> wrappedF;
 	return YES;
 }
 
+- (BOOL)any:(id <FKFunction>)f {
+	for (id item in self) {
+		if ([f :item]) {
+			return YES;
+		}
+	}
+	return NO;
+}
+
 - (NSArray *)filter:(id <FKFunction>)f {
     NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:[self count]];
 	for (id item in self) {
 		if ([f :item]) {
+            [filtered addObject:item];
+		}
+	}
+    return [NSArray arrayWithArray:filtered];
+}
+
+- (NSArray *)drop:(id <FKFunction>)f {
+    NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:[self count]];
+	for (id item in self) {
+		if (![f :item]) {
             [filtered addObject:item];
 		}
 	}

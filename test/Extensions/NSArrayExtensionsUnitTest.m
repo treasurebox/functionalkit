@@ -90,6 +90,30 @@
     STAssertEqualObjects(NSARRAY(@"A", @"B", @"C"), [array unique], nil);
 }
 
+- (void)testAnyReturnsTrue {
+    NSArray *a = @[@1,@NO,@2];
+    STAssertTrue([a any:functionS(boolValue)], nil);
+    a = @[@NO,@NO,@NO,@1];
+    STAssertTrue([a any:functionS(boolValue)], nil);
+    a = @[@2,@1,@5,@1];
+    STAssertTrue([a any:functionS(boolValue)], nil);
+}
+
+- (void)testAnyReturnsFalse {
+    NSArray *array = @[@NO, @NO, @NO];
+    STAssertFalse([array any:functionS(boolValue)], @"array %@ should return false");
+}
+
+- (void)testDropKeepsFalseEvaluations {
+    NSArray *a = @[@1,@NO,@2];
+    STAssertEqualObjects(@[@NO], [a drop:functionS(boolValue)], nil);
+}
+
+- (void)testDropReturnsEmpty {
+    NSArray *a = @[@1,@2,@3];
+    STAssertEqualObjects(@[], [a drop:functionS(boolValue)], nil);
+}
+
 - (BOOL)isStringContainingOne:(id)string {
     return [string isEqual:@"1"];
 }

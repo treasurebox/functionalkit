@@ -72,7 +72,7 @@
     dispatch_once(&onceToken, ^{
         none = [FKNone new];
     });
-    return none;
+    return [[none retain] autorelease];
 }
 
 + (FKOption *)some:(id)someObject {

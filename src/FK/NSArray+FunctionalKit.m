@@ -98,6 +98,13 @@ READ id <FKFunction> wrappedF;
     }
 }
 
+- (NSArray *)take:(NSUInteger)firstItems {
+    if ([self count] > firstItems) {
+        return [self subarrayWithRange:NSMakeRange(0, firstItems)];
+    }
+    return [NSArray arrayWithArray:self];
+}
+
 - (FKP2 *)span:(id <FKFunction>)f {
     NSMutableArray *matching = [NSMutableArray array];
     NSMutableArray *rest = [NSMutableArray array];

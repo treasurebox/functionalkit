@@ -114,6 +114,24 @@
     STAssertEqualObjects(@[], [a drop:functionS(boolValue)], nil);
 }
 
+- (void)testTakeTooMany {
+    NSArray *a = @[@1,@2,@3];
+    STAssertEquals(3U, [[a take:4] count], nil);
+}
+
+- (void)testTakeReturnsCorrectSizedArray {
+    NSArray *a = @[@1,@2,@3];
+    STAssertEquals(0U, [[a take:0] count], nil);
+    STAssertEquals(1U, [[a take:1] count], nil);
+    STAssertEquals(2U, [[a take:2] count], nil);
+    STAssertEquals(3U, [[a take:3] count], nil);
+}
+
+- (void)testTakeFromEmptyArray {
+    NSArray *a = @[];
+    STAssertEquals(0U, [[a take:42] count], nil);
+}
+
 - (BOOL)isStringContainingOne:(id)string {
     return [string isEqual:@"1"];
 }

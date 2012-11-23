@@ -4,6 +4,7 @@
 #import "NSArray+FunctionalKit.h"
 #import "FKP2.h"
 #import "NSString+FunctionalKit.h"
+#import "NSArray+FunctionalKitBlocks.h"
 
 @interface NSArrayExtensionsUnitTest : SenTestCase
 @end
@@ -134,6 +135,35 @@
 
 - (BOOL)isStringContainingOne:(id)string {
     return [string isEqual:@"1"];
+}
+
+#pragma mark Block Tests
+
+- (void)testCanMapABlockAcrossAnArray {
+    STAssertEqualObjects([@[@"test"] fkMapWithBlock:^id(id item) {return [item uppercaseString];}], @[@"TEST"], nil);
+}
+
+- (void)testCanMapIndexABlockAcrossAnArray {
+    NSArray *actResult = [@[@"test", @"test"] fkMapIndexWithBlock:^id(NSUInteger index, id item) {
+        return [item stringByAppendingFormat:@"%d", index];
+    }];
+    STAssertEqualObjects(actResult, NSARRAY(@"test0", @"test1"), nil);
+}
+
+- (void)testCanBlockFilterAnArray {
+    NSArray *baseArray = @[@"apple", @"banana", @"apricot", @"pear"];
+    NSArray *filteredResult = [baseArray fkFilterWitbBlock:^BOOL(id item) {
+        return [item hasPrefix:@"a"];
+    }];
+    STAssertEqualObjects(filteredResult, NSARRAY(@"apple", @"apricot"), nil);
+}
+
+- (void)testCanBlockRejectAnArray {
+    NSArray *baseArray = @[@"apple", @"banana", @"apricot", @"pear"];
+    NSArray *filteredResult = [baseArray fkRejectWithBlock:^BOOL(id item) {
+        return [item hasPrefix:@"a"];
+    }];
+    STAssertEqualObjects(filteredResult, NSARRAY(@"banana", @"pear"), nil);
 }
 
 @end

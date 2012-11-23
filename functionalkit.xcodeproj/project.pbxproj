@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B8F02E616602965003B2615 /* NSArray+FunctionalKitBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = 3B8F02E416602965003B2615 /* NSArray+FunctionalKitBlocks.h */; };
+		3B8F02E716602965003B2615 /* NSArray+FunctionalKitBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8F02E516602965003B2615 /* NSArray+FunctionalKitBlocks.m */; };
+		3B8F02E816602965003B2615 /* NSArray+FunctionalKitBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8F02E516602965003B2615 /* NSArray+FunctionalKitBlocks.m */; };
 		4720886111D951E600045928 /* FKEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C21188117B2C7100E28F4B /* FKEffect.m */; };
 		4720886211D951E700045928 /* FKP2.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C21196117B2C7100E28F4B /* FKP2.m */; };
 		4720886311D951E800045928 /* FKP5.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C2119C117B2C7100E28F4B /* FKP5.m */; };
@@ -95,6 +98,8 @@
 
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		3B8F02E416602965003B2615 /* NSArray+FunctionalKitBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+FunctionalKitBlocks.h"; sourceTree = "<group>"; };
+		3B8F02E516602965003B2615 /* NSArray+FunctionalKitBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+FunctionalKitBlocks.m"; sourceTree = "<group>"; };
 		4720885B11D951C400045928 /* Test.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4720885C11D951C400045928 /* Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = "<group>"; };
 		479C88B5118FA7BD00C91ED4 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
@@ -241,6 +246,8 @@
 				47C211AF117B2C7100E28F4B /* NSObject+FunctionalKit.m */,
 				47C211B0117B2C7100E28F4B /* NSString+FunctionalKit.h */,
 				47C211B1117B2C7100E28F4B /* NSString+FunctionalKit.m */,
+				3B8F02E416602965003B2615 /* NSArray+FunctionalKitBlocks.h */,
+				3B8F02E516602965003B2615 /* NSArray+FunctionalKitBlocks.m */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -341,6 +348,7 @@
 				47C211EE117B2C7100E28F4B /* NSObject+FunctionalKit.h in Headers */,
 				47C211F0117B2C7100E28F4B /* NSString+FunctionalKit.h in Headers */,
 				479C88B6118FA7BD00C91ED4 /* Prefix.pch in Headers */,
+				3B8F02E616602965003B2615 /* NSArray+FunctionalKitBlocks.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +473,7 @@
 				472088BC11D9571800045928 /* FKEitherUnitTest.m in Sources */,
 				472088BD11D9571900045928 /* NSDictionaryExtensionsUnitTest.m in Sources */,
 				472088BE11D9571A00045928 /* FKOptionUnitTest.m in Sources */,
+				3B8F02E816602965003B2615 /* NSArray+FunctionalKitBlocks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,6 +501,7 @@
 				47C211ED117B2C7100E28F4B /* NSInvocation+FunctionalKit.m in Sources */,
 				47C211EF117B2C7100E28F4B /* NSObject+FunctionalKit.m in Sources */,
 				47C211F1117B2C7100E28F4B /* NSString+FunctionalKit.m in Sources */,
+				3B8F02E716602965003B2615 /* NSArray+FunctionalKitBlocks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

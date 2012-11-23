@@ -139,4 +139,24 @@
     }
 }
 
+#pragma mark - Block Functions
+
+- (id)orSomeBlock:(id (^)(void))block {
+    return self.isSome ? self.some : block();
+}
+
+- (FKOption *)mapBlock:(id (^)(id))mapBlock{
+    return self.isSome ? [FKOption some:mapBlock(self.some)] : self;
+}
+
+- (FKOption *)bindBlock:(FKOption * (^)(id)) bindBlock {
+	return self.isSome ? bindBlock(self.some) : self;
+}
+
+- (void)foreachBlock:(void (^)(id item))each {
+    if (self.isSome) {
+        each(self.some);
+    }
+}
+
 @end

@@ -51,6 +51,10 @@ READ BOOL isSome;
 // Side-effects on some if some;
 - (void)foreach:(id <FKEffect>)effect;
 
+- (id)orSomeBlock:(id (^)(void))block;
+- (FKOption *)mapBlock:(id (^)(id))mapBlock;
+- (FKOption *)bindBlock:(FKOption * (^)(id)) bindBlock;
+
 @end
 
 @interface FKNone : FKOption

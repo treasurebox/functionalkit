@@ -86,6 +86,54 @@
     
 }
 
+- (void)testOrSome {
+    FKOption *o1 = [FKOption some:@5];
+    
+    STAssertEqualObjects(@5, [o1 orSomeBlock:(id)^{ return @200; }],nil);
+    STAssertEqualObjects(@2, [[FKOption none] orSomeBlock:(id)^{ return @2; }], nil);
+}
+
+- (void)testBindBlockGivesSome {
+    FKOption *o1 = [FKOption some:@5];
+    FKOption *o2 = nil;
+    
+    o2 = [o1 bindBlock:^FKOption *(id some) {
+        return [FKOption some: @([(NSNumber *)some intValue] + 5)];
+    }];
+    STAssertEqualObjects(@10, o2.some, nil);
+}
+
+- (void)testBindBlockGivesNone {
+    FKOption *o1 = nil;
+    o1 = [[FKOption none] bindBlock:^FKOption *(id some) {
+        STFail(@"This block shouldn't be evaluated");
+        return [FKOption some: @([(NSNumber *)some intValue] + 5)];
+    }];
+    
+    STAssertEqualObjects([FKOption none], o1, nil);
+}
+
+
+- (void)testMapBlockGivesSome {
+    FKOption *o1 = [FKOption some:@5];
+    FKOption *o2 = nil;
+    
+    o2 = [o1 bindBlock:^FKOption *(id some) {
+        return [FKOption some: @([(NSNumber *)some intValue] + 5)];
+    }];
+    STAssertEqualObjects(@10, o2.some, nil);
+}
+
+- (void)testMapBlockGivesNone {
+    FKOption *o1 = nil;
+    o1 = [[FKOption none] bindBlock:^FKOption *(id some) {
+        STFail(@"This block shouldn't be evaluated");
+        return [FKOption some: @([(NSNumber *)some intValue] + 5)];
+    }];
+    STAssertEqualObjects([FKOption none], o1, nil);
+}
+
+
 - (FKOption *)givesANone:(NSString *)str {
     return [FKOption none];
 }

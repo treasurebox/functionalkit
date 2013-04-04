@@ -1,10 +1,13 @@
 
 /*
- Macros for creating instant types based on P*'s.
+ Arc Compatible Macros for creating instant types based on P*'s.
  Provides somewhat typesafe contructors and accessors.
-
- Your.h => NewTypeInterface(MyNewType, NSString, fieldName);
- Your.m => NewTypeImplementation(MyNewType, NSString, fieldName);
+ 
+ Arc based macros are for when FunctionalKit is compiled into a 
+ static library but the project they're used in is using ARC
+ 
+ Your.h => NewTypeArcInterface(MyNewType, NSString, fieldName);
+ Your.m => NewTypeArcImplementation(MyNewType, NSString, fieldName);
  
  Later...
  MyNewType *instance = [MyNewType fieldName:@"foobar"];
@@ -28,7 +31,7 @@
 
 
 // P1 newtype
-#define NewTypeInterface(newtype, wrappedtype1, acc1) \
+#define NewTypeArcInterface(newtype, wrappedtype1, acc1) \
 @interface newtype : FKP1 \
 + (newtype *)acc1:(wrappedtype1 *)acc1; \
 @property (readonly) wrappedtype1 *acc1; \
@@ -36,12 +39,12 @@
 FKOption *NSArrayTo##newtype(NSArray *a); \
 FKOption *NSDictionaryTo##newtype(NSDictionary *d); \
 
-#define NewTypeImplementation(newtype, wrappedtype1, acc1) \
+#define NewTypeArcImplementation(newtype, wrappedtype1, acc1) \
 @implementation newtype \
 \
 - (wrappedtype1 *)acc1 { return _1; }  \
 - (newtype *)initWith_1:(wrappedtype1 *)acc1 { return ((self = [super initWith_1:acc1])); } \
-+ (newtype *)acc1:(wrappedtype1 *)acc1 { return [[[self alloc] initWith_1:acc1] autorelease]; } \
++ (newtype *)acc1:(wrappedtype1 *)acc1 { return [[self alloc] initWith_1:acc1]; } \
 @end \
 \
 FKOption *NSArrayTo##newtype(NSArray *arg) {\
@@ -66,7 +69,7 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 } \
 
 // P2 newtype
-#define NewType2Interface(newtype, wrappedtype1, acc1, wrappedtype2, acc2) \
+#define NewType2ArcInterface(newtype, wrappedtype1, acc1, wrappedtype2, acc2) \
 @interface newtype : FKP2 \
 + (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2; \
 @property (readonly) wrappedtype1 *acc1; \
@@ -75,12 +78,12 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 FKOption *NSArrayTo##newtype(NSArray *a); \
 FKOption *NSDictionaryTo##newtype(NSDictionary *d); \
 
-#define NewType2Implementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2) \
+#define NewType2ArcImplementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2) \
 @implementation newtype \
 \
 - (wrappedtype1 *)acc1 { return _1; }  - (wrappedtype2 *)acc2 { return _2; }  \
 - (newtype *)initWith_1:(wrappedtype1 *)acc1 _2:(wrappedtype2 *)acc2 { return ((self = [super initWith_1:acc1 _2:acc2])); } \
-+ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 { return [[[self alloc] initWith_1:acc1 _2:acc2] autorelease]; } \
++ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 { return [[self alloc] initWith_1:acc1 _2:acc2] ; } \
 @end \
 \
 FKOption *NSArrayTo##newtype(NSArray *arg) {\
@@ -106,7 +109,7 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 } \
 
 // P3 newtype
-#define NewType3Interface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3) \
+#define NewType3ArcInterface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3) \
 @interface newtype : FKP3 \
 + (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3; \
 @property (readonly) wrappedtype1 *acc1; \
@@ -116,12 +119,12 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 FKOption *NSArrayTo##newtype(NSArray *a); \
 FKOption *NSDictionaryTo##newtype(NSDictionary *d); \
 
-#define NewType3Implementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3) \
+#define NewType3ArcImplementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3) \
 @implementation newtype \
 \
 - (wrappedtype1 *)acc1 { return _1; }  - (wrappedtype2 *)acc2 { return _2; }  - (wrappedtype3 *)acc3 { return _3; }  \
 - (newtype *)initWith_1:(wrappedtype1 *)acc1 _2:(wrappedtype2 *)acc2 _3:(wrappedtype3 *)acc3 { return ((self = [super initWith_1:acc1 _2:acc2 _3:acc3])); } \
-+ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 { return [[[self alloc] initWith_1:acc1 _2:acc2 _3:acc3] autorelease]; } \
++ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 { return [[self alloc] initWith_1:acc1 _2:acc2 _3:acc3] ; } \
 @end \
 \
 FKOption *NSArrayTo##newtype(NSArray *arg) {\
@@ -148,7 +151,7 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 } \
 
 // P4 newtype
-#define NewType4Interface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4) \
+#define NewType4ArcInterface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4) \
 @interface newtype : FKP4 \
 + (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4; \
 @property (readonly) wrappedtype1 *acc1; \
@@ -159,12 +162,12 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 FKOption *NSArrayTo##newtype(NSArray *a); \
 FKOption *NSDictionaryTo##newtype(NSDictionary *d); \
 
-#define NewType4Implementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4) \
+#define NewType4ArcImplementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4) \
 @implementation newtype \
 \
 - (wrappedtype1 *)acc1 { return _1; }  - (wrappedtype2 *)acc2 { return _2; }  - (wrappedtype3 *)acc3 { return _3; }  - (wrappedtype4 *)acc4 { return _4; }  \
 - (newtype *)initWith_1:(wrappedtype1 *)acc1 _2:(wrappedtype2 *)acc2 _3:(wrappedtype3 *)acc3 _4:(wrappedtype4 *)acc4 { return ((self = [super initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4])); } \
-+ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 { return [[[self alloc] initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4] autorelease]; } \
++ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 { return [[self alloc] initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4] ; } \
 @end \
 \
 FKOption *NSArrayTo##newtype(NSArray *arg) {\
@@ -192,7 +195,7 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 } \
 
 // P5 newtype
-#define NewType5Interface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5) \
+#define NewType5ArcInterface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5) \
 @interface newtype : FKP5 \
 + (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5; \
 @property (readonly) wrappedtype1 *acc1; \
@@ -204,12 +207,12 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 FKOption *NSArrayTo##newtype(NSArray *a); \
 FKOption *NSDictionaryTo##newtype(NSDictionary *d); \
 
-#define NewType5Implementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5) \
+#define NewType5ArcImplementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5) \
 @implementation newtype \
 \
 - (wrappedtype1 *)acc1 { return _1; }  - (wrappedtype2 *)acc2 { return _2; }  - (wrappedtype3 *)acc3 { return _3; }  - (wrappedtype4 *)acc4 { return _4; }  - (wrappedtype5 *)acc5 { return _5; }  \
 - (newtype *)initWith_1:(wrappedtype1 *)acc1 _2:(wrappedtype2 *)acc2 _3:(wrappedtype3 *)acc3 _4:(wrappedtype4 *)acc4 _5:(wrappedtype5 *)acc5 { return ((self = [super initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5])); } \
-+ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5 { return [[[self alloc] initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5] autorelease]; } \
++ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5 { return [[self alloc] initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5] ; } \
 @end \
 \
 FKOption *NSArrayTo##newtype(NSArray *arg) {\
@@ -238,7 +241,7 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 } \
 
 // P6 newtype
-#define NewType6Interface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6) \
+#define NewType6ArcInterface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6) \
 @interface newtype : FKP6 \
 + (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5 acc6:(wrappedtype6 *)acc6; \
 @property (readonly) wrappedtype1 *acc1; \
@@ -251,12 +254,12 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 FKOption *NSArrayTo##newtype(NSArray *a); \
 FKOption *NSDictionaryTo##newtype(NSDictionary *d); \
 
-#define NewType6Implementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6) \
+#define NewType6ArcImplementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6) \
 @implementation newtype \
 \
 - (wrappedtype1 *)acc1 { return _1; }  - (wrappedtype2 *)acc2 { return _2; }  - (wrappedtype3 *)acc3 { return _3; }  - (wrappedtype4 *)acc4 { return _4; }  - (wrappedtype5 *)acc5 { return _5; }  - (wrappedtype6 *)acc6 { return _6; }  \
 - (newtype *)initWith_1:(wrappedtype1 *)acc1 _2:(wrappedtype2 *)acc2 _3:(wrappedtype3 *)acc3 _4:(wrappedtype4 *)acc4 _5:(wrappedtype5 *)acc5 _6:(wrappedtype6 *)acc6 { return ((self = [super initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5 _6:acc6])); } \
-+ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5 acc6:(wrappedtype6 *)acc6 { return [[[self alloc] initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5 _6:acc6] autorelease]; } \
++ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5 acc6:(wrappedtype6 *)acc6 { return [[self alloc] initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5 _6:acc6] ; } \
 @end \
 \
 FKOption *NSArrayTo##newtype(NSArray *arg) {\
@@ -286,7 +289,7 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 } \
 
 // P7 newtype
-#define NewType7Interface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6, wrappedtype7, acc7) \
+#define NewType7ArcInterface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6, wrappedtype7, acc7) \
 @interface newtype : FKP7 \
 + (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5 acc6:(wrappedtype6 *)acc6 acc7:(wrappedtype7 *)acc7; \
 @property (readonly) wrappedtype1 *acc1; \
@@ -300,12 +303,12 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 FKOption *NSArrayTo##newtype(NSArray *a); \
 FKOption *NSDictionaryTo##newtype(NSDictionary *d); \
 
-#define NewType7Implementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6, wrappedtype7, acc7) \
+#define NewType7ArcImplementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6, wrappedtype7, acc7) \
 @implementation newtype \
 \
 - (wrappedtype1 *)acc1 { return _1; }  - (wrappedtype2 *)acc2 { return _2; }  - (wrappedtype3 *)acc3 { return _3; }  - (wrappedtype4 *)acc4 { return _4; }  - (wrappedtype5 *)acc5 { return _5; }  - (wrappedtype6 *)acc6 { return _6; }  - (wrappedtype7 *)acc7 { return _7; }  \
 - (newtype *)initWith_1:(wrappedtype1 *)acc1 _2:(wrappedtype2 *)acc2 _3:(wrappedtype3 *)acc3 _4:(wrappedtype4 *)acc4 _5:(wrappedtype5 *)acc5 _6:(wrappedtype6 *)acc6 _7:(wrappedtype7 *)acc7 { return ((self = [super initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5 _6:acc6 _7:acc7])); } \
-+ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5 acc6:(wrappedtype6 *)acc6 acc7:(wrappedtype7 *)acc7 { return [[[self alloc] initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5 _6:acc6 _7:acc7] autorelease]; } \
++ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5 acc6:(wrappedtype6 *)acc6 acc7:(wrappedtype7 *)acc7 { return [[self alloc] initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5 _6:acc6 _7:acc7] ; } \
 @end \
 \
 FKOption *NSArrayTo##newtype(NSArray *arg) {\
@@ -336,7 +339,7 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 } \
 
 // P8 newtype
-#define NewType8Interface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6, wrappedtype7, acc7, wrappedtype8, acc8) \
+#define NewType8ArcInterface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6, wrappedtype7, acc7, wrappedtype8, acc8) \
 @interface newtype : FKP8 \
 + (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5 acc6:(wrappedtype6 *)acc6 acc7:(wrappedtype7 *)acc7 acc8:(wrappedtype8 *)acc8; \
 @property (readonly) wrappedtype1 *acc1; \
@@ -351,12 +354,12 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 FKOption *NSArrayTo##newtype(NSArray *a); \
 FKOption *NSDictionaryTo##newtype(NSDictionary *d); \
 
-#define NewType8Implementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6, wrappedtype7, acc7, wrappedtype8, acc8) \
+#define NewType8ArcImplementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3, wrappedtype4, acc4, wrappedtype5, acc5, wrappedtype6, acc6, wrappedtype7, acc7, wrappedtype8, acc8) \
 @implementation newtype \
 \
 - (wrappedtype1 *)acc1 { return _1; }  - (wrappedtype2 *)acc2 { return _2; }  - (wrappedtype3 *)acc3 { return _3; }  - (wrappedtype4 *)acc4 { return _4; }  - (wrappedtype5 *)acc5 { return _5; }  - (wrappedtype6 *)acc6 { return _6; }  - (wrappedtype7 *)acc7 { return _7; }  - (wrappedtype8 *)acc8 { return _8; }  \
 - (newtype *)initWith_1:(wrappedtype1 *)acc1 _2:(wrappedtype2 *)acc2 _3:(wrappedtype3 *)acc3 _4:(wrappedtype4 *)acc4 _5:(wrappedtype5 *)acc5 _6:(wrappedtype6 *)acc6 _7:(wrappedtype7 *)acc7 _8:(wrappedtype8 *)acc8 { return ((self = [super initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5 _6:acc6 _7:acc7 _8:acc8])); } \
-+ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5 acc6:(wrappedtype6 *)acc6 acc7:(wrappedtype7 *)acc7 acc8:(wrappedtype8 *)acc8 { return [[[self alloc] initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5 _6:acc6 _7:acc7 _8:acc8] autorelease]; } \
++ (newtype *)acc1:(wrappedtype1 *)acc1 acc2:(wrappedtype2 *)acc2 acc3:(wrappedtype3 *)acc3 acc4:(wrappedtype4 *)acc4 acc5:(wrappedtype5 *)acc5 acc6:(wrappedtype6 *)acc6 acc7:(wrappedtype7 *)acc7 acc8:(wrappedtype8 *)acc8 { return [[self alloc] initWith_1:acc1 _2:acc2 _3:acc3 _4:acc4 _5:acc5 _6:acc6 _7:acc7 _8:acc8] ; } \
 @end \
 \
 FKOption *NSArrayTo##newtype(NSArray *arg) {\
@@ -390,14 +393,14 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 
 // Do both. This won't work most of the time, duplicate symbols abound
 #define NEWTYPE(newtype, wrappedtype, acc1) \
-NewTypeInterface(newtype, wrappedtype, acc1) \
-NewTypeImplementation(newtype, wrappedtype, acc1)
+NewTypeArcInterface(newtype, wrappedtype, acc1) \
+NewTypeArcImplementation(newtype, wrappedtype, acc1)
 
 #define NEWTYPE2(newtype, wrappedtype1, acc1, wrappedtype2, acc2) \
-NewType2Interface(newtype, wrappedtype1, acc1, wrappedtype2, acc2) \
-NewType2Implementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2)
+NewType2ArcInterface(newtype, wrappedtype1, acc1, wrappedtype2, acc2) \
+NewType2ArcImplementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2)
 
 #define NEWTYPE3(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3) \
-NewType3Interface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3) \
-NewType3Implementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3)
+NewType3ArcInterface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3) \
+NewType3ArcImplementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3)
 

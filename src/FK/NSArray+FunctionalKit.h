@@ -24,6 +24,10 @@ READ id head;
 // The array without the first element or fails for the empty array.
 READ NSArray *tail;
 
+// Safely take first x items
+// [a] -> [a]
+- (NSArray *)take:(NSUInteger)firstItems;
+
 // Returns a tuple where the first element is an array containing the longest prefix of this array that satisfies the given predicate and the second 
 // element is the remainder of the array (i.e. those items that don't match).
 // f :: id -> BOOL

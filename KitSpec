@@ -1,5 +1,2 @@
-{
-    "name": "functionalkit"
-  , "version": "1.4"
-  , "dependencies": []
-}
+name: functionalkit
+version: 1.4

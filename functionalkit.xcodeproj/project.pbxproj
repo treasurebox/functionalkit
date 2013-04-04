@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B95C084170E2043008246E7 /* FKNewtypeArcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B95C083170E2043008246E7 /* FKNewtypeArcTests.m */; };
 		4720886111D951E600045928 /* FKEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C21188117B2C7100E28F4B /* FKEffect.m */; };
 		4720886211D951E700045928 /* FKP2.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C21196117B2C7100E28F4B /* FKP2.m */; };
 		4720886311D951E800045928 /* FKP5.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C2119C117B2C7100E28F4B /* FKP5.m */; };
@@ -96,6 +97,7 @@
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		3B95C082170E1F49008246E7 /* FKNewTypeArc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FKNewTypeArc.h; sourceTree = "<group>"; };
+		3B95C083170E2043008246E7 /* FKNewtypeArcTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKNewtypeArcTests.m; sourceTree = "<group>"; };
 		4720885B11D951C400045928 /* Test.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4720885C11D951C400045928 /* Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = "<group>"; };
 		479C88B5118FA7BD00C91ED4 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				47C211FB117B2C8A00E28F4B /* FKFunctionCommonTests.m */,
 				47C211FC117B2C8A00E28F4B /* FKFunctionTests.m */,
 				47C211FD117B2C8A00E28F4B /* FKNewtypeTests.m */,
+				3B95C083170E2043008246E7 /* FKNewtypeArcTests.m */,
 			);
 			path = test;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				47C211ED117B2C7100E28F4B /* NSInvocation+FunctionalKit.m in Sources */,
 				47C211EF117B2C7100E28F4B /* NSObject+FunctionalKit.m in Sources */,
 				47C211F1117B2C7100E28F4B /* NSString+FunctionalKit.m in Sources */,
+				3B95C084170E2043008246E7 /* FKNewtypeArcTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

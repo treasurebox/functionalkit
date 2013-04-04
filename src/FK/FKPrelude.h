@@ -6,6 +6,7 @@
 #import "FK/FKFunction+Common.h"
 #import "FK/FKMacros.h"
 #import "FK/FKNewtype.h"
+#import "FK/FKNewTypeArc.h"
 #import "FK/FKP1.h"
 #import "FK/FKP2.h"
 #import "FK/FKP3.h"

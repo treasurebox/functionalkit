@@ -392,15 +392,15 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 
 
 // Do both. This won't work most of the time, duplicate symbols abound
-#define NEWTYPE(newtype, wrappedtype, acc1) \
+#define NEWTYPEARC(newtype, wrappedtype, acc1) \
 NewTypeArcInterface(newtype, wrappedtype, acc1) \
 NewTypeArcImplementation(newtype, wrappedtype, acc1)
 
-#define NEWTYPE2(newtype, wrappedtype1, acc1, wrappedtype2, acc2) \
+#define NEWTYPE2ARC(newtype, wrappedtype1, acc1, wrappedtype2, acc2) \
 NewType2ArcInterface(newtype, wrappedtype1, acc1, wrappedtype2, acc2) \
 NewType2ArcImplementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2)
 
-#define NEWTYPE3(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3) \
+#define NEWTYPE3ARC(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3) \
 NewType3ArcInterface(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3) \
 NewType3ArcImplementation(newtype, wrappedtype1, acc1, wrappedtype2, acc2, wrappedtype3, acc3)
 

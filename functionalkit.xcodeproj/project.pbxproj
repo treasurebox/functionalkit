@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3B95C084170E2043008246E7 /* FKNewtypeArcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B95C083170E2043008246E7 /* FKNewtypeArcTests.m */; };
+		3B95C085170E20A9008246E7 /* FKNewtypeArcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B95C083170E2043008246E7 /* FKNewtypeArcTests.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4720886111D951E600045928 /* FKEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C21188117B2C7100E28F4B /* FKEffect.m */; };
 		4720886211D951E700045928 /* FKP2.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C21196117B2C7100E28F4B /* FKP2.m */; };
 		4720886311D951E800045928 /* FKP5.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C2119C117B2C7100E28F4B /* FKP5.m */; };
@@ -443,6 +444,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4720886111D951E600045928 /* FKEffect.m in Sources */,
+				3B95C085170E20A9008246E7 /* FKNewtypeArcTests.m in Sources */,
 				4720886211D951E700045928 /* FKP2.m in Sources */,
 				4720886311D951E800045928 /* FKP5.m in Sources */,
 				4720886411D951E800045928 /* NSString+FunctionalKit.m in Sources */,

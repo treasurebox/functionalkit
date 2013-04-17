@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B95C084170E2043008246E7 /* FKNewtypeArcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B95C083170E2043008246E7 /* FKNewtypeArcTests.m */; };
 		3B95C085170E20A9008246E7 /* FKNewtypeArcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B95C083170E2043008246E7 /* FKNewtypeArcTests.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4720886111D951E600045928 /* FKEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C21188117B2C7100E28F4B /* FKEffect.m */; };
 		4720886211D951E700045928 /* FKP2.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C21196117B2C7100E28F4B /* FKP2.m */; };
@@ -499,7 +498,6 @@
 				47C211ED117B2C7100E28F4B /* NSInvocation+FunctionalKit.m in Sources */,
 				47C211EF117B2C7100E28F4B /* NSObject+FunctionalKit.m in Sources */,
 				47C211F1117B2C7100E28F4B /* NSString+FunctionalKit.m in Sources */,
-				3B95C084170E2043008246E7 /* FKNewtypeArcTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

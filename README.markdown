@@ -63,7 +63,7 @@ Handle a possibly nil value safely.
 
 ```objc
 NSDictionary *dict = ...;
-FKOption *couldBeNil = [KFOption fromNil:[dict objectForKey:@"SomeKey"]];
+FKOption *couldBeNil = [FKOption fromNil:[dict objectForKey:@"SomeKey"]];
 ```
 
 ### Handling failures

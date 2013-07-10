@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import "FK/FKMacros.h"
-#import "FK/FKFunction.h"
 
 // TODO Add foreach.
 
@@ -12,55 +11,31 @@ extern NSString *FKFunctionalKitErrorDomain;
 
 @protocol FKEitherProjection <NSObject>
 
-// The either value underlying this projection.
-READ FKEither *either;
-
-// The value of this projection or fails (throws an NSException) with a specialised error message.
-READ id value;
-
 // Returns the value of this projection or fails (throws an NSException) with the given error message.
 - (id)valueOrFailWithMessage:(NSString *)errorMessage;
 
 // Returns the value of this projection or, if the value is on the other side, |other|.
-- (id)orValue:(id)other;
+- (id)valueOr:(id)other;
 
 // Maps the given function across the value of the projection.
 // f should be a fucntion with the following type: a -> b.
-- (FKEither *)map:(id <FKFunction>)f;
+- (FKEither *)map:(id (^)(id))f;
 
 // Binds the given function across the projection.
 // f :: a -> FKEither b.
-- (FKEither *)bind:(id <FKFunction>)f;
+- (FKEither *)bind:(FKEither *(^)(id))f;
 
 // Returns Some value if either is of this projection, else returns None
 - (FKOption *)toOption;
-
-@end
-
-// A left projection of an either value.
-@interface FKLeftProjection : NSObject <FKEitherProjection> {
-    FKEither *either;
-}
-@end
-
-// A right projection of an either value.
-@interface FKRightProjection : NSObject <FKEitherProjection> {
-    FKEither *either;
-}
 @end
 
 // The Either type represents a value of one of two possible types (a disjoint union).
 // The data constructors; Left and Right represent the two possible values. The Either type is often used as an alternative to Option where Left 
 // represents failure (by convention) and Right is akin to Some.
-@interface FKEither : NSObject {
-    id value;
-    BOOL isLeft;
-}
+@interface FKEither : NSObject <FKEitherProjection>
 
-READ BOOL isLeft;
-READ BOOL isRight;
-READ FKLeftProjection *left;
-READ FKRightProjection *right;
+-(BOOL)isLeft;
+-(BOOL)isRight;
 
 // Construct a left value of either.
 + (FKEither *)leftWithValue:(id)value;
@@ -88,7 +63,4 @@ READ FKRightProjection *right;
 // If this is a left, then return the left value in right, or vice versa.
 - (FKEither *)swap;
 
-// Joins across the right side: E<A, E<A, B>> -> E<A, B>
-// Note: requires that the right side is an either. Currently not enforced.
-+ (FKEither *)joinRight:(FKEither *)either;
 @end

@@ -1,39 +1,36 @@
 #import "FKP6.h"
 #import <objc/runtime.h>
 
+
+@interface FKP6 (private)
+@property (strong) id _1;
+@property (strong) id _2;
+@property (strong) id _3;
+@property (strong) id _4;
+@property (strong) id _5;
+@property (strong) id _6;
+@end
+
 @implementation FKP6
 
-@synthesize _1, _2, _3, _4, _5, _6;
-
-+ (FKP6 *)p6With_1:(id)_1 _2:(id)_2 _3:(id)_3 _4:(id)_4 _5:(id)_5 _6:(id)_6 {
-    return [[[FKP6 alloc] initWith_1:_1 _2:_2 _3:_3 _4:_4 _5:_5 _6:_6] autorelease];
-}
-
-- (void)dealloc {
-    [_1 release];
-    [_2 release];
-    [_3 release];
-    [_4 release];
-    [_5 release];
-    [_6 release];
-    [super dealloc];
-}
-
-#pragma mark Private methods.
 - (id)initWith_1:(id)new_1 _2:(id)new_2 _3:(id)new_3 _4:(id)new_4 _5:(id)new_5 _6:(id)new_6 {
     if (self = [super init]) {
-        _1 = [new_1 retain];
-        _2 = [new_2 retain];
-        _3 = [new_3 retain];
-        _4 = [new_4 retain];
-        _5 = [new_5 retain];
-        _6 = [new_6 retain];
+        __1 = new_1;
+        __2 = new_2;
+        __3 = new_3;
+        __4 = new_4;
+        __5 = new_5;
+        __6 = new_6;
     }
     return self;
 }
 
++ (id)_1:(id)new_1 _2:(id)new_2 _3:(id)new_3 _4:(id)new_4 _5:(id)new_5 _6:(id)new_6 {
+  return [[self alloc] initWith_1:(id)new_1 _2:(id)new_2 _3:(id)new_3 _4:(id)new_4 _5:(id)new_5 _6:(id)new_6];
+}
+
 - (NSString *)description {
-	return [NSString stringWithFormat:@"<%s: _1=%@ _2=%@ _3=%@ _4=%@ _5=%@ _6=%@>", class_getName([self class]), _1, _2, _3, _4, _5, _6];
+	return [NSString stringWithFormat:@"<%s: _1=%@ _2=%@ _3=%@ _4=%@ _5=%@ _6=%@>", class_getName([self class]), __1, __2, __3, __4, __5, __6];
 }
 
 #pragma mark NSObject methods.
@@ -42,16 +39,11 @@
         return NO;
     } else {
         FKP6 *other = (FKP6 *)object;
-		return [_1 isEqual:other._1] && [_2 isEqual:other._2] && [_3 isEqual:other._3] && [_4 isEqual:other._4] && [_5 isEqual:other._5] && [_6 isEqual:other._6];
+		return [__1 isEqual:other._1] && [__2 isEqual:other._2] && [__3 isEqual:other._3] && [__4 isEqual:other._4] && [__5 isEqual:other._5] && [__6 isEqual:other._6];
     }
 }
 
 - (NSUInteger)hash {
-    return [_1 hash] + [_2 hash] + [_3 hash] + [_4 hash] + [_5 hash] + [_6 hash];
-}
-
-#pragma mark NSCopying
-- (id)copyWithZone:(NSZone *)zone {
-	return [self retain];
+    return [__1 hash] + [__2 hash] + [__3 hash] + [__4 hash] + [__5 hash] + [__6 hash];
 }
 @end

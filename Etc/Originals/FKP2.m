@@ -1,31 +1,24 @@
 #import "FKP2.h"
 #import <objc/runtime.h>
 
+
+@interface FKP2 (private)
+@property (strong) id _1;
+@property (strong) id _2;
+@end
+
 @implementation FKP2
 
-@synthesize _1, _2;
-
-+ (FKP2 *)p2With_1:(id)_1 _2:(id)_2 {
-    return [[[FKP2 alloc] initWith_1:_1 _2:_2] autorelease];
-}
-
-- (void)dealloc {
-    [_1 release];
-    [_2 release];
-    [super dealloc];
-}
-
-#pragma mark Private methods.
 - (id)initWith_1:(id)new_1 _2:(id)new_2 {
     if (self = [super init]) {
-        _1 = [new_1 retain];
-        _2 = [new_2 retain];
+        __1 = new_1;
+        __2 = new_2;
     }
     return self;
 }
 
 - (NSString *)description {
-	return [NSString stringWithFormat:@"<%s: _1=%@ _2=%@>", class_getName([self class]), _1, _2];
+	return [NSString stringWithFormat:@"<%s: _1=%@ _2=%@>", class_getName([self class]), __1, __2];
 }
 
 #pragma mark NSObject methods.
@@ -34,16 +27,11 @@
         return NO;
     } else {
         FKP2 *other = (FKP2 *)object;
-		return [_1 isEqual:other._1] && [_2 isEqual:other._2];
+		return [__1 isEqual:other._1] && [__2 isEqual:other._2];
     }
 }
 
 - (NSUInteger)hash {
-    return [_1 hash] + [_2 hash];
-}
-
-#pragma mark NSCopying
-- (id)copyWithZone:(NSZone *)zone {
-	return [self retain];
+    return [__1 hash] + [__2 hash];
 }
 @end

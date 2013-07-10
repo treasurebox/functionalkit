@@ -1,72 +1,12 @@
 #import "NSArray+FunctionalKit.h"
 #import "FKMacros.h"
 
-// TODO - Add stuff like these
-//@interface NSArray (FK)
-//- (NSArray *)zip:(NSArray *)other;
-//@end
-//
-//@implementation NSArray (FK)
-//- (NSArray *)zip:(NSArray *)other {
-//	assert([other count] == [self count]);
-//	NSMutableArray *r = [NSMutableArray arrayWithCapacity:[self count]];
-//	for (int i = 0; i < [self count]; ++i) {
-//		[r addObject:[FKP2 p2With_1:[self objectAtIndex:i] _2:[other objectAtIndex:i]]];
-//	}
-//	return [NSArray arrayWithArray:r];
-//}
-//@end
-
-@interface FKLiftedFunction : FKFunction {
-	id <FKFunction> wrappedF;
-}
-
-READ id <FKFunction> wrappedF;
-
-- (FKLiftedFunction *)initWithF:(FKFunction *)wrappedF;
-
-@end
-
-@implementation FKLiftedFunction
-
-@synthesize wrappedF;
-
-- (FKLiftedFunction *)initWithF:(FKFunction *)inWrappedF {
-	if ((self = [super init])) {
-		wrappedF = [inWrappedF retain];
-	}
-	return self;
-}
-
-- (id):(id)arg {
-	assert([arg isKindOfClass:[NSArray class]]);
-    return [((NSArray *) arg) map:wrappedF];
-}
-
-#pragma mark NSObject methods.
-- (void) dealloc {
-    [wrappedF release];
-    [super dealloc];
-}
-
-- (BOOL)isEqual:(id)object {
-    return object == nil || ![[object class] isEqual:[self class]] ? NO : [wrappedF isEqual:((FKLiftedFunction *) object).wrappedF];
-}
-
-- (NSUInteger)hash {
-    return 42;
-}
-
-- (NSString *)description {
-    return [NSString stringWithFormat:@"<%s wrappedF: %@>", class_getName([self class]), wrappedF];
-}
-
-@end
-
 @implementation NSArray (FunctionalKitExtensions)
 
-+ (id <FKFunction>)liftFunction:(id <FKFunction>)f {
-	return [[[FKLiftedFunction alloc] initWithF:f] autorelease];
++ (NSArray *(^)(NSArray *))liftFunction:(id (^)(id))f {
+    return ^(NSArray *v) {
+        return [v map:f];
+    };
 }
 
 + (NSArray *)concat:(NSArray *)nested {
@@ -76,7 +16,7 @@ READ id <FKFunction> wrappedF;
             [concatenated addObjectsFromArray:item];
         } else {
             NSString *message = @"Cannot concat a non-array value";
-            @throw [NSException exceptionWithName:NSInvalidArgumentException reason:message userInfo:EMPTY_DICT];
+            @throw [NSException exceptionWithName:NSInvalidArgumentException reason:message userInfo:@{}];
         }
     }
     return [NSArray arrayWithArray:concatenated];
@@ -84,7 +24,7 @@ READ id <FKFunction> wrappedF;
 
 - (id)head {
     if ([self count] == 0) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot get the head of an empty array" userInfo:EMPTY_DICT];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot get the head of an empty array" userInfo:@{}];
     } else {
         return [self objectAtIndex:0];
     }
@@ -92,7 +32,7 @@ READ id <FKFunction> wrappedF;
 
 - (NSArray *)tail {
     if ([self count] == 0) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot get the tail of an empty array" userInfo:EMPTY_DICT];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot get the tail of an empty array" userInfo:@{}];
     } else {
         return [self subarrayWithRange:NSMakeRange(1, [self count] - 1)];
     }
@@ -105,61 +45,61 @@ READ id <FKFunction> wrappedF;
     return [NSArray arrayWithArray:self];
 }
 
-- (FKP2 *)span:(id <FKFunction>)f {
+- (FKP2 *)span:(BOOL (^)(id))f {
     NSMutableArray *matching = [NSMutableArray array];
     NSMutableArray *rest = [NSMutableArray array];
 	for (id item in self) {
-		if ([f :item]) {
+		if (f(item)) {
             [matching addObject:item];
 		} else {
             [rest addObject:item];
         }
 	}
-    return [FKP2 p2With_1:[NSArray arrayWithArray:matching] _2:[NSArray arrayWithArray:rest]];
+    return [[FKP2 alloc] initWith_1:[NSArray arrayWithArray:matching] _2:[NSArray arrayWithArray:rest]];
 }
 
-- (BOOL)all:(id <FKFunction>)f {
+- (BOOL)all:(BOOL (^)(id))f {
 	for (id item in self) {
-		if (![f :item]) {
+		if (!f(item)) {
 			return NO;
 		}
 	}
 	return YES;
 }
 
-- (BOOL)any:(id <FKFunction>)f {
+- (BOOL)any:(BOOL (^)(id))f {
 	for (id item in self) {
-		if ([f :item]) {
+		if (f(item)) {
 			return YES;
 		}
 	}
 	return NO;
 }
 
-- (NSArray *)filter:(id <FKFunction>)f {
+- (NSArray *)filter:(BOOL (^)(id))f {
     NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:[self count]];
 	for (id item in self) {
-		if ([f :item]) {
+		if (f(item)) {
             [filtered addObject:item];
 		}
 	}
     return [NSArray arrayWithArray:filtered];
 }
 
-- (NSArray *)drop:(id <FKFunction>)f {
+- (NSArray *)drop:(BOOL (^)(id))f {
     NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:[self count]];
 	for (id item in self) {
-		if (![f :item]) {
+		if (!f(item)) {
             [filtered addObject:item];
 		}
 	}
     return [NSArray arrayWithArray:filtered];
 }
 
-- (NSDictionary *)groupByKey:(id <FKFunction>)f {
+- (NSDictionary *)groupByKey:(id (^)(id))f {
     NSMutableDictionary *grouped = [NSMutableDictionary dictionary];
 	for (id item in self) {
-        id key = [f :item];
+        id key = f(item);
         id nilsafeKey = key == nil ? [NSNull null] : key;
         NSMutableArray *values = [grouped objectForKey:nilsafeKey];
         if (values == nil) {
@@ -171,26 +111,26 @@ READ id <FKFunction> wrappedF;
     return [NSDictionary dictionaryWithDictionary:grouped];
 }
 
-- (id)foldLeft:(id)acc f:(id <FKFunction2>)f {
-    id accC = [[acc copy] autorelease];
+- (id)foldLeft:(id)acc f:(id (^)(id, id))f {
+    __strong id accC = acc;
     for (id item in self) {
-        accC = [f :accC :item];
+        accC = f(accC, item);
     }
     return accC;
 }
 
-- (NSArray *)map:(id <FKFunction>)f {
+- (NSArray *)map:(id (^)(id))f {
 	NSMutableArray *r = [NSMutableArray arrayWithCapacity:[self count]];
 	for (id item in self) {
-		[r addObject:[f :item]];
+		[r addObject:f(item)];
 	}
 	return [NSArray arrayWithArray:r];
 }
 
-- (NSArray *)mapOption:(id <FKFunction>)f {
+- (NSArray *)mapOption:(FKOption *(^)(id))f {
 	NSMutableArray *r = [NSMutableArray array];
 	for (id item in self) {
-        FKOption *o = [f :item];
+        FKOption *o = f(item);
         if (o.isSome) {
             [r addObject:o.some];
         }
@@ -198,9 +138,9 @@ READ id <FKFunction> wrappedF;
 	return [NSArray arrayWithArray:r];
 }
 
-- (void)foreach:(id <FKFunction>)f {
+- (void)foreach:(void (^)(id))f {
 	for (id item in self) {
-		[f :item];
+		f(item);
 	}
 }
 
@@ -219,18 +159,6 @@ READ id <FKFunction> wrappedF;
         [reversed addObject:[self objectAtIndex:i]];
     }
     return reversed;
-}
-
-// TODO This is innefficient, consider writing it manually.
-- (NSArray *)unique {
-    NSSet *unique = [NSSet setWithArray:self];
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (id item in unique) {
-        [array addObject:item];
-    }
-    NSArray *copy = [array copy];
-    [array release];
-    return [copy autorelease];
 }
 
 - (FKOption *)toOption {

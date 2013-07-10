@@ -1,36 +1,32 @@
 #import "FKP<%= n %>.h"
 #import <objc/runtime.h>
 <% 
-macro_names = ('a'..'z').to_a[0,n]
-macro_bit = (1..n).to_a.map { |i| "_#{i}:#{macro_names[i-1]}" }.join(' ') 
-call_init_bit = (1..n).to_a.map { |i| "_#{i}:#{varnames[i-1]}" }.join(' ') 
-selector_bit = (1..n).to_a.map { |i| "_#{i}:(id)#{varnames[i-1]}" }.join(' ') 
-init_bit = (1..n).to_a.map { |i| "_#{i}:(id)new#{varnames[i-1]}" }.join(' ') 
+vars_and_selectors = selectors.zip(varnames)
+call_init_bit = (1..n).to_a.map { |i| "_#{i}:#{selectors[i-1]}" }.join(' ') 
+selector_bit = (1..n).to_a.map { |i| "_#{i}:(id)#{selectors[i-1]}" }.join(' ') 
+init_bit = (1..n).to_a.map { |i| "_#{i}:(id)new#{selectors[i-1]}" }.join(' ') 
 cls = "FKP#{n}"
 %>
+
+@interface <%= cls %> (private)
+<% selectors.each do |s| %>@property (strong) id <%= s %>;
+<% end %>@end
+
 @implementation <%= cls %>
 
-@synthesize <%= varnames.join(', ') %>;
-
-+ (<%= cls %> *)p<%= n %>With<%= selector_bit %> {
-    return [[[<%= cls %> alloc] initWith<%= call_init_bit %>] autorelease];
-}
-
-- (void)dealloc {
-<%= varnames.map { |i| "    [#{i} release];" }.join("\n") %>
-    [super dealloc];
-}
-
-#pragma mark Private methods.
 - (id)initWith<%= init_bit %> {
     if (self = [super init]) {
-<%= varnames.map { |i| "        #{i} = [new#{i} retain];" }.join("\n") %>
+<%= vars_and_selectors.map { |i,v| "        #{v} = new#{i};" }.join("\n") %>
     }
     return self;
 }
 
++ (id)<%= init_bit %> {
+  return [[self alloc] initWith<%=init_bit%>];
+}
+
 - (NSString *)description {
-	return [NSString stringWithFormat:@"<%%s: <%= varnames.map { |i| "#{i}=%@"}.join(' ') %>>", class_getName([self class]), <%= varnames.join(', ') %>];
+	return [NSString stringWithFormat:@"<%%s: <%= vars_and_selectors.map { |i,v| "#{i}=%@"}.join(' ') %>>", class_getName([self class]), <%= varnames.join(', ') %>];
 }
 
 #pragma mark NSObject methods.
@@ -39,16 +35,11 @@ cls = "FKP#{n}"
         return NO;
     } else {
         <%= cls %> *other = (<%= cls %> *)object;
-		return <%= varnames.map { |i| "[#{i} isEqual:other.#{i}]"}.join(" && ") %>;
+		return <%= (varnames.zip(selectors)).map { |i,v| "[#{i} isEqual:other.#{v}]"}.join(" && ") %>;
     }
 }
 
 - (NSUInteger)hash {
     return <%= varnames.map { |i| "[#{i} hash]" }.join(" + ") %>;
-}
-
-#pragma mark NSCopying
-- (id)copyWithZone:(NSZone *)zone {
-	return [self retain];
 }
 @end

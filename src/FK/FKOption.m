@@ -1,6 +1,19 @@
 #import "FK/FKOption.h"
+#import <objc/runtime.h>
+
+@interface FKNone : FKOption
+@end
+
+@interface FKSome : FKOption
+
+@property (strong) id someObject;
+@end
 
 @implementation FKNone
+
+- (BOOL)isSome {
+    return false;
+}
 
 #pragma mark NSObject methods.
 - (BOOL)isEqual:(id)object {
@@ -12,7 +25,12 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%s>", class_getName([self class])];
+    return @"<FKNone>";
+}
+
+- (id)some {
+    NSString *message = @"Attempt to access some but this is None";
+    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:message userInfo:@{}];
 }
 
 @end
@@ -24,12 +42,11 @@
 @implementation FKSome
 
 - (id)some {
-    return someObject;
+    return _someObject;
 }
 
-- (void) dealloc {
-    [someObject release];
-    [super dealloc];
+- (BOOL)isSome {
+    return true;
 }
 
 #pragma mark NSObject methods.
@@ -48,7 +65,7 @@
 #pragma mark Private methods.
 - (FKSome *)initWithSome:(id)newSomeObject {
     if ((self = [super init])) {
-        someObject = [newSomeObject retain];
+        _someObject = newSomeObject;
     }
     return self;
 }
@@ -67,42 +84,25 @@
 }
 
 + (FKOption *)none {
-    return [[[FKNone alloc] init] autorelease];
+    return [[FKNone alloc] init];
 }
 
 + (FKOption *)some:(id)someObject {
-    return [[[FKSome alloc] initWithSome:someObject] autorelease];
+    return [[FKSome alloc] initWithSome:someObject];
 }
 
-// TODO Replace this implementation with filter.
 + (NSArray *)somes:(NSArray *)options {
 	NSMutableArray *result = [NSMutableArray array];
 	for (FKOption *o in options) {
-		if ([o isSome]) {
-			[result addObject:[o some]];
-		}
+        [o foreach: ^(id v) {
+            [result addObject:v];
+        }];
 	}
 	return [NSArray arrayWithArray:result];
 }
 
-// TODO Add identity function.
-//+ (FKOption *)concat:(FKOption *)nested {
-//    if (nested.isSome) {
-//    } else {
-//    }
-//}
-
 - (BOOL)isNone {
-    return [self isKindOfClass:[FKNone class]];
-}
-
-- (BOOL)isSome {
-    return [self isKindOfClass:[FKSome class]];
-}
-
-- (id)some {
-    NSString *message = @"Attempt to access some but this is None";
-    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:message userInfo:EMPTY_DICT];
+    return ![self isSome];
 }
 
 - (FKOption *)orElse:(FKOption *)other {
@@ -113,16 +113,16 @@
     return self.isSome ? [self some] : some;
 }
 
-- (FKOption *)map:(id <FKFunction>)f {
-	return self.isSome ? [FKOption some:[f :self.some]] : self;
+- (FKOption *)map:(id (^)(id))f {
+	return self.isSome ? [FKOption some:f(self.some)] : self;
 }
 
-- (FKOption *)bind:(id <FKFunction>)f {
-	return self.isSome ? [f :self.some] : self;
+- (FKOption *)bind:(FKOption *(^)(id))f {
+	return self.isSome ? f(self.some) : self;
 }
 
-- (FKOption *)filter:(id <FKFunction>)f {
-    return (self.isSome && [f :self.some]) ? self: [FKOption none];
+- (FKOption *)filter:(BOOL (^)(id))f {
+    return (self.isSome && f(self.some)) ? self : [FKOption none];
 }
 
 - (FKEither *)toEither:(id)left {
@@ -133,9 +133,9 @@
 	return self.isSome ? [FKEither rightWithValue:self.some] : [FKEither errorWithReason:reason];
 }
 
-- (void)foreach:(id <FKEffect>)effect {
+- (void)foreach:(void (^)(id))effect {
     if (self.isSome) {
-        [effect e:self.some];
+        effect(self.some);
     }
 }
 

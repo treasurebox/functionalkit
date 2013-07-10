@@ -41,37 +41,37 @@ NEWTYPE3(Simple3, NSString, a, NSString, b, NSString, c);
 
 - (void)testWrongSizeArrayCreation {
 
-	id fromEmpty = NSArrayToAge(EMPTY_ARRAY);
+	id fromEmpty = NSArrayToAge(@[]);
 	STAssertTrue([fromEmpty isKindOfClass:[FKOption class]],nil);
 	STAssertTrue([fromEmpty isNone], nil);
 	
-	id fromTooBig = NSArrayToAge(NSARRAY(@"54", @"55"));
+	id fromTooBig = NSArrayToAge(@[@"54", @"55"]);
 	STAssertTrue([fromTooBig isKindOfClass:[FKOption class]],nil);
 	STAssertTrue([fromTooBig isNone], nil);
 }
 
 - (void)testWrongTypeArrayCreation {
-	id fromWrongType = NSArrayToAge(NSARRAY([NSNumber numberWithInt:54]));
+	id fromWrongType = NSArrayToAge(@[[NSNumber numberWithInt:54]]);
 	STAssertTrue([fromWrongType isKindOfClass:[FKOption class]],nil);
 	STAssertTrue([fromWrongType isNone], nil);
 }
 
 - (void)testValidDictionaryCreation {
-	FKOption *result = NSDictionaryToAge(NSDICT(@"54", @"age"));
+	FKOption *result = NSDictionaryToAge(@{@"age": @"54"});
 	STAssertTrue(result.isSome, nil);
 	STAssertEqualObjects(result.some,[Age age:@"54"], nil);
 	
-	result = NSDictionaryToSimple2(NSDICT(@"bval", @"b", @"aval", @"a"));
+	result = NSDictionaryToSimple2(@{@"b": @"bval", @"a": @"aval"});
 	STAssertTrue([result isSome], nil);
 	STAssertEqualObjects([result some], [Simple2 a:@"aval" b:@"bval"], nil);
 	
-	result = NSDictionaryToSimple3(NSDICT(@"bval", @"b", @"aval", @"a", @"cval", @"c"));
+	result = NSDictionaryToSimple3(@{@"b": @"bval", @"a": @"aval", @"c": @"cval"});
 	STAssertTrue([result isSome], nil);
 	STAssertEqualObjects([result some], [Simple3 a:@"aval" b:@"bval" c:@"cval"], nil);
 }
 
 - (void)testInvalidDictionaryCreation {
-	FKOption *result = NSDictionaryToAge(NSDICT(@"54", @"ages"));
+	FKOption *result = NSDictionaryToAge(@{@"ages": @"54"});
 	STAssertTrue(result.isNone, nil);
 }
 @end

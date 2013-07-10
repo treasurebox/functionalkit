@@ -1,7 +1,6 @@
 #import <SenTestingKit/SenTestingKit.h>
 #import "FK/FKEither.h"
 #import "FK/FKOption.h"
-#import "FKFunction.h"
 
 @interface FKEitherUnitTest : SenTestCase {
     NSObject *o1;
@@ -12,24 +11,22 @@
 @implementation FKEitherUnitTest
 
 - (void)setUp {
-    o1 = [[[NSObject alloc] init] autorelease];
-    o2 = [[[NSObject alloc] init] autorelease];
+    o1 = [[NSObject alloc] init];
+    o2 = [[NSObject alloc] init];
 }
 
 - (void)testALeftIsLeft {
     FKEither *leftEither = [FKEither leftWithValue:o1];
-    FKLeftProjection *left = leftEither.left;
     STAssertTrue(leftEither.isLeft, nil);
     STAssertFalse(leftEither.isRight, nil);
-    STAssertEqualObjects(o1, left.value, nil);
+    STAssertEqualObjects(o1, [leftEither.swap valueOr:nil], nil);
 }
 
 - (void)testARightIsRight {
     FKEither *rightEither = [FKEither rightWithValue:o1];
-    FKRightProjection *right = rightEither.right;
     STAssertTrue(rightEither.isRight, nil);
     STAssertFalse(rightEither.isLeft, nil);
-    STAssertEqualObjects(o1, right.value, nil);
+    STAssertEqualObjects(o1, [rightEither valueOr:nil], nil);
 }
 
 - (void)testTwoLeftsWithEqualValuesAreEqual {
@@ -65,7 +62,7 @@
 - (void)testAccessingTheRightValueInLeftThrowsAnError {
     FKEither *l = [FKEither leftWithValue:o1];
     @try {
-        l.right.value;
+        [l valueOrFailWithMessage:@""];
         STFail(@"Expected an exception to be thrown");
     }
     @catch (id exception) {
@@ -75,7 +72,7 @@
 - (void)testAccessingTheLeftValueInLeftThrowsAnError {
     FKEither *r = [FKEither rightWithValue:o1];
     @try {
-        r.left.value;
+        [r.swap valueOrFailWithMessage:@""];
         STFail(@"Expected an exception to be thrown");
     }
     @catch (id exception) {
@@ -85,70 +82,40 @@
 - (void)testAccessingTheLeftOrValue {
 	FKEither *left = [FKEither leftWithValue:o1];
 	FKEither *right = [FKEither rightWithValue:o1];
-	STAssertEqualObjects([left.right orValue:@"54"], @"54", nil);
-	STAssertEqualObjects([right.left orValue:@"54"], @"54", nil);
-	STAssertEqualObjects([left.left orValue:@"54"], o1, nil);
-	STAssertEqualObjects([right.right orValue:@"54"], o1, nil);
+	STAssertEqualObjects([right.swap valueOr:@"54"], @"54", nil);
+	STAssertEqualObjects([left valueOr:@"54"], @"54", nil);
 }
 
 - (void)testMappingAcrossTheLeft {
 	FKEither *either = [FKEither leftWithValue:[NSNumber numberWithInt:54]];
-	FKEither *mapped = [either.left map:functionS(description)];
+	FKEither *mapped = [either.swap map:^(id v) { return [v description]; }].swap;
 	STAssertTrue(mapped.isLeft,nil);
-	STAssertEqualObjects(mapped.left.value, @"54",nil);
+	STAssertEqualObjects([mapped.swap valueOr:nil], @"54",nil);
 }
 
 - (void)testMappingAcrossTheRightOfALeftIsIdentity {
 	FKEither *either = [FKEither leftWithValue:[NSNumber numberWithInt:54]];
-	FKEither *mapped = [either.right map:functionS(description)];
+	FKEither *mapped = [either map:^(id v) { return [v description]; }];
 	STAssertEqualObjects(either, mapped, nil);
 }
 
 - (void)testMappingAcrossTheRight {
 	FKEither *either = [FKEither rightWithValue:[NSNumber numberWithInt:54]];
-	FKEither *mapped = [either.right map:functionS(description)];
+	FKEither *mapped = [either map:^(id v) { return [v description]; }];
 	STAssertTrue(mapped.isRight,nil);
-	STAssertEqualObjects(mapped.right.value, @"54",nil);	
-}
-
-- (void)testMappingAcrossTheLeftOfARightIsIdentity {
-	FKEither *either = [FKEither rightWithValue:[NSNumber numberWithInt:54]];
-	FKEither *mapped = [either.left map:functionS(description)];
-	STAssertEqualObjects(either, mapped, nil);
-}
-
-- (void)testMappingUsingF {
-	FKEither *either = [FKEither rightWithValue:[NSNumber numberWithInt:54]];
-	FKEither *mapped = [either.right map:[FKFunction functionFromSelector:@selector(description)]];
-	STAssertEqualObjects(mapped.right.value, @"54", nil);
+	STAssertEqualObjects([mapped valueOr:nil], @"54",nil);
 }
 
 - (void)testToOption {
 	FKEither *either = [FKEither rightWithValue:@"v"];
-	STAssertTrue([[either.right toOption] isSome], nil);
-	STAssertTrue([[either.left toOption] isNone], nil);
-}
-
-- (void)testBindLeftConcatentatesToProduceASingleEither {
-	FKEither *either = [FKEither leftWithValue:@"v"];
-    FKEither *afterBind = [either.left bind:functionTS(self, toLeft:)];
-    STAssertEqualObjects(either, afterBind, nil);
+	STAssertTrue([[either toOption] isSome], nil);
+	STAssertTrue([[either.swap toOption] isNone], nil);
 }
 
 - (void)testBindRightConcatentatesToProduceASingleEither {
 	FKEither *either = [FKEither rightWithValue:@"v"];
-    FKEither *afterBind = [either.right bind:functionTS(self, toRight:)];
+    FKEither *afterBind = [either bind:^(id v) { return [self toRight:v]; }];
     STAssertEqualObjects(either, afterBind, nil);
-}
-
-- (void)testRightJoin {
-    FKEither *fullRight = [FKEither rightWithValue:[FKEither rightWithValue:@"right"]];
-    FKEither *firstLeft = [FKEither leftWithValue:@"left"];
-    FKEither *secondLeft = [FKEither rightWithValue:[FKEither leftWithValue:@"left"]];
-    
-    STAssertEqualObjects([FKEither joinRight:fullRight], [FKEither rightWithValue:@"right"], nil);
-    STAssertEqualObjects([FKEither joinRight:firstLeft], [FKEither leftWithValue:@"left"], nil);
-    STAssertEqualObjects([FKEither joinRight:secondLeft], [FKEither leftWithValue:@"left"], nil);
 }
 
 - (FKEither *)toLeft:(NSString *)string {

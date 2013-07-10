@@ -1,33 +1,30 @@
 #import "FKP3.h"
 #import <objc/runtime.h>
 
+
+@interface FKP3 (private)
+@property (strong) id _1;
+@property (strong) id _2;
+@property (strong) id _3;
+@end
+
 @implementation FKP3
 
-@synthesize _1, _2, _3;
-
-+ (FKP3 *)p3With_1:(id)_1 _2:(id)_2 _3:(id)_3 {
-    return [[[FKP3 alloc] initWith_1:_1 _2:_2 _3:_3] autorelease];
-}
-
-- (void)dealloc {
-    [_1 release];
-    [_2 release];
-    [_3 release];
-    [super dealloc];
-}
-
-#pragma mark Private methods.
 - (id)initWith_1:(id)new_1 _2:(id)new_2 _3:(id)new_3 {
     if (self = [super init]) {
-        _1 = [new_1 retain];
-        _2 = [new_2 retain];
-        _3 = [new_3 retain];
+        __1 = new_1;
+        __2 = new_2;
+        __3 = new_3;
     }
     return self;
 }
 
++ (id)_1:(id)new_1 _2:(id)new_2 _3:(id)new_3 {
+  return [[self alloc] initWith_1:(id)new_1 _2:(id)new_2 _3:(id)new_3];
+}
+
 - (NSString *)description {
-	return [NSString stringWithFormat:@"<%s: _1=%@ _2=%@ _3=%@>", class_getName([self class]), _1, _2, _3];
+	return [NSString stringWithFormat:@"<%s: _1=%@ _2=%@ _3=%@>", class_getName([self class]), __1, __2, __3];
 }
 
 #pragma mark NSObject methods.
@@ -36,16 +33,11 @@
         return NO;
     } else {
         FKP3 *other = (FKP3 *)object;
-		return [_1 isEqual:other._1] && [_2 isEqual:other._2] && [_3 isEqual:other._3];
+		return [__1 isEqual:other._1] && [__2 isEqual:other._2] && [__3 isEqual:other._3];
     }
 }
 
 - (NSUInteger)hash {
-    return [_1 hash] + [_2 hash] + [_3 hash];
-}
-
-#pragma mark NSCopying
-- (id)copyWithZone:(NSZone *)zone {
-	return [self retain];
+    return [__1 hash] + [__2 hash] + [__3 hash];
 }
 @end

@@ -12,7 +12,6 @@
  
  */
 
-#import "FKFunction.h"
 #import "FKOption.h"
 
 <%= (1..n).map { |i| "\#import \"FKP#{i}.h\"" }.join("\n")%>
@@ -23,6 +22,7 @@
 // P<%= dim %> newtype
 #define NewType<%= (dim == 1) ? "" : dim %>Interface(newtype, <%= macro_arg_list %>) \
 @interface newtype : FKP<%= dim %> \
+- (newtype *)initWith<%= (1..dim).map { |i| "_#{i}:(wrappedtype#{i} *)acc#{i}" }.join(' ') %>; \
 + (newtype *)<%= (1..dim).map { |i| "acc#{i}:(wrappedtype#{i} *)acc#{i}" }.join(' ') %>; \
 <%= (1..dim).map { |i| "@property (readonly) wrappedtype#{i} *acc#{i}; \\" }.join("\n") %>
 @end \
@@ -32,9 +32,9 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *d); \
 #define NewType<%= (dim == 1) ? "" : dim %>Implementation(newtype, <%= macro_arg_list %>) \
 @implementation newtype \
 \
-<%= (1..dim).map do |i| "- (wrappedtype#{i} *)acc#{i} { return _#{i}; } " end.join(' ') %> \
+<%= (1..dim).map do |i| "- (wrappedtype#{i} *)acc#{i} { return self._#{i}; } " end.join(' ') %> \
 - (newtype *)initWith<%= (1..dim).map { |i| "_#{i}:(wrappedtype#{i} *)acc#{i}" }.join(' ') %> { return ((self = [super initWith<%= (1..dim).map { |i| "_#{i}:acc#{i}" }.join(' ') %>])); } \
-+ (newtype *)<%= (1..dim).map { |i| "acc#{i}:(wrappedtype#{i} *)acc#{i}" }.join(' ') %> { return [[[self alloc] initWith<%= (1..dim).map { |i| "_#{i}:acc#{i}" }.join(' ') %>] autorelease]; } \
++ (newtype *)<%= (1..dim).map { |i| "acc#{i}:(wrappedtype#{i} *)acc#{i}" }.join(' ') %> { return [[self alloc] initWith<%= (1..dim).map { |i| "_#{i}:acc#{i}" }.join(' ') %>] ; } \
 @end \
 \
 FKOption *NSArrayTo##newtype(NSArray *arg) {\
@@ -52,7 +52,7 @@ FKOption *NSDictionaryTo##newtype(NSDictionary *dict) {\
 	if (![dict isKindOfClass:[NSDictionary class]]) { \
 		return [FKOption none]; \
 	} \
-	NSArray *keys = NSARRAY(<%= (1..dim).map { |i| "[NSString stringWithUTF8String:\#acc#{i}]" }.join(', ')%>);\
+	NSArray *keys = @[<%= (1..dim).map { |i| "[NSString stringWithUTF8String:\#acc#{i}]" }.join(', ')%>];\
 	NSArray *values = [dict objectsForKeys:keys notFoundMarker:[NSNull null]]; \
 	FKOption *result = NSArrayTo##newtype(values); \
 	return result; \

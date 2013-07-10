@@ -1,7 +1,6 @@
 #import <SenTestingKit/SenTestingKit.h>
 #import "FK/FKOption.h"
 #import "FK/FKMacros.h"
-#import "FK/FKFunction.h"
 
 @interface FKOptionUnitTest : SenTestCase {
     NSObject *object;
@@ -11,7 +10,7 @@
 @implementation FKOptionUnitTest
 
 - (void)setUp {
-    object = [[[NSObject alloc] init] autorelease];
+    object = [[NSObject alloc] init];
 }
 
 - (void)testANoneIsNone {
@@ -34,9 +33,9 @@
 }
 
 - (void)testMaps {
-	STAssertTrue([[[FKOption none] map:functionS(description)] isNone], nil);
+	STAssertTrue([[[FKOption none] map:^(id v) { return [v description]; }] isNone], nil);
 	NSString *description = [object description];
-	FKOption *r = [[FKOption some:object] map:functionS(description)];
+	FKOption *r = [[FKOption some:object] map:^(id v) { return [v description]; }];
 	STAssertTrue([r isSome], nil);	
 	STAssertEqualObjects([r some], description, nil);
 }
@@ -48,28 +47,28 @@
 }
 
 - (void)testBindingAcrossANoneGivesANone {
-    id result = [[FKOption none] bind:functionTS(self, givesANone:)];
+    id result = [[FKOption none] bind:^(id v) { return [FKOption none]; }];
     STAssertTrue([result isKindOfClass:[FKOption class]], nil);
     STAssertTrue([result isNone], nil);
 }
 
 - (void)testBindingAcrossASomeWithANoneGivesANone {
-    id result = [[FKOption some:@"foo"] bind:functionTS(self, givesANone:)];
+    id result = [[FKOption some:@"foo"] bind:^(id v) { return [FKOption none]; }];
     STAssertTrue([result isKindOfClass:[FKOption class]], nil);
     STAssertTrue([result isNone], nil);
 }
 
 - (void)testBindingAcrossASomeWithASomeGivesANone {
-    id result = [[FKOption some:@"foo"] bind:functionTS(self, givesASome:)];
+    id result = [[FKOption some:@"foo"] bind:^(id v) { return [FKOption some:v]; }];
     STAssertTrue([result isKindOfClass:[FKOption class]], nil);
     STAssertTrue([result isSome], nil);
     STAssertEqualObjects(@"foo", [result some], nil);
 }
 
 - (void)testSomes {
-	NSArray *options = NSARRAY([FKOption some:@"54"], [FKOption none]);
+	NSArray *options = @[[FKOption some:@"54"], [FKOption none]];
 	NSArray *somes = [FKOption somes:options];
-	STAssertEqualObjects(NSARRAY(@"54"), somes, nil);
+	STAssertEqualObjects(@[@"54" ], somes, nil);
 }
 
 - (BOOL)isString:(id)arg {
@@ -79,19 +78,8 @@
 - (void)testFilter {
     FKOption *o1 = [FKOption some:[NSNumber numberWithInt:5]];
     FKOption *o2 = [FKOption some:@"Okay"];
-    
-    STAssertTrue([[[FKOption none] filter:functionTS(self, isString:)] isNone], nil);
-    STAssertTrue([[o1 filter:functionTS(self, isString:)] isNone], nil);
-    STAssertTrue([[o2 filter:functionTS(self, isString:)] isSome], nil);
-    
+    STAssertTrue([[[FKOption none] filter:^(id v){return [self isString:v];}] isNone], nil);
+    STAssertTrue([[o1 filter:^(id v){return [self isString:v];}] isNone], nil);
+    STAssertTrue([[o2 filter:^(id v){return [self isString:v];}] isSome], nil);
 }
-
-- (FKOption *)givesANone:(NSString *)str {
-    return [FKOption none];
-}
-
-- (FKOption *)givesASome:(NSString *)str {
-    return [FKOption some:str];
-}
-
 @end

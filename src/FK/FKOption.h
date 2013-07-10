@@ -1,15 +1,14 @@
 #import <Foundation/Foundation.h>
-#import "FK/FKEffect.h"
-#import "FK/FKFunction.h"
 #import "FK/FKEither.h"
 #import "FK/FKMacros.h"
 
 // An optional value that may be none (no value) or some (a value). This type is a replacement for the use of nil to denote non-existence.
 @interface FKOption : NSObject
 
-READ id some;
-READ BOOL isNone;
-READ BOOL isSome;
+@property (readonly) id some;
+
+@property (readonly) BOOL isNone;
+@property (readonly) BOOL isSome;
 
 + (FKOption *)fromNil:(id)maybeNil;
 
@@ -34,13 +33,13 @@ READ BOOL isSome;
 - (id)orSome:(id)some;
 
 // Maps the given function across the option
-- (FKOption *)map:(id <FKFunction>)f;
+- (FKOption *)map:(id (^)(id))f;
 
 // Binds the given function across the projection.
 // f should be a fucntion with the following type: a -> FKOption[b].
-- (FKOption *)bind:(id <FKFunction>)f;
+- (FKOption *)bind:(FKOption *(^)(id))f;
 
-- (FKOption *)filter:(id <FKFunction>)f;
+- (FKOption *)filter:(BOOL (^)(id))f;
 
 // Returns an either projection of this optional value; |left| in a Left if this optional holds no value, or this optional's value in Right.
 - (FKEither *)toEither:(id)left;
@@ -49,14 +48,6 @@ READ BOOL isSome;
 - (FKEither *)toEitherWithError:(NSString *)reason;
 
 // Side-effects on some if some;
-- (void)foreach:(id <FKEffect>)effect;
+- (void)foreach:(void (^)(id))effect;
 
-@end
-
-@interface FKNone : FKOption
-@end
-
-@interface FKSome : FKOption {
-    id someObject;
-}
 @end

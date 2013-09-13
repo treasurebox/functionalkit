@@ -146,19 +146,15 @@
 
 - (NSArray *)intersperse:(id)object {
     NSMutableArray *interspersed = [NSMutableArray array];
-    for (int i = 0; i < [self count]; i++) {
+    for (NSUInteger i = 0; i < [self count]; ++i) {
         [interspersed addObject:[self objectAtIndex:i]];
         if (i != [self count] - 1) [interspersed addObject:object];
     }    
-    return interspersed;
+    return [NSArray arrayWithArray:interspersed];
 }
 
 - (NSArray *)reverse {
-    NSMutableArray *reversed = [NSMutableArray array];
-    for (int i = [self count] - 1; i >= 0; i--) {
-        [reversed addObject:[self objectAtIndex:i]];
-    }
-    return reversed;
+	return [[self reverseObjectEnumerator] allObjects];
 }
 
 - (FKOption *)toOption {

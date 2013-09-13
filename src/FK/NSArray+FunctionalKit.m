@@ -157,6 +157,10 @@
 	return [[self reverseObjectEnumerator] allObjects];
 }
 
+- (NSArray *)unique {
+	return [[NSSet setWithArray:self] allObjects];
+}
+
 - (FKOption *)toOption {
     return  [self count] == 0 ? [FKOption none] : [FKOption some:[self objectAtIndex:0]];
 }

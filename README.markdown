@@ -147,7 +147,7 @@ FKOption *maybePhotos = [FKOption fromNil:[dictionary objectForKey:@"photos"] of
 // Still within the option monad, lift the parse function (above) into the array monad and map across the option.
 id <FKFunction> parsePhotoF = [FKFunction functionFromSelector:@selector(parsePhotoForDictionary:) target:self];
 FKOption *maybeParsedPhotos = [maybePhotos map:[NSArray liftFunction:parsePhotoF]];
-
+```
 
 ## Other Work
 

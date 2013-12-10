@@ -28,6 +28,12 @@ NSString *FKFunctionalKitErrorDomain = @"FunctionalKit";
 	return _isRight ? f(_value) : self;
 }
 
+- (void)foreach:(void (^)(id))effect {
+    if (_isRight) {
+        effect(_value);
+    }
+}
+
 - (FKOption *)toOption {
 	return _isRight? [FKOption some:_value] : [FKOption none];
 }

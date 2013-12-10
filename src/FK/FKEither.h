@@ -9,6 +9,7 @@ extern NSString *FKFunctionalKitErrorDomain;
 @class FKEither;
 @class FKOption;
 
+// Right-biased either projection.
 @protocol FKEitherProjection <NSObject>
 
 // Returns the value of this projection or fails (throws an NSException) with the given error message.
@@ -24,6 +25,9 @@ extern NSString *FKFunctionalKitErrorDomain;
 // Binds the given function across the projection.
 // f :: a -> FKEither b.
 - (FKEither *)bind:(FKEither *(^)(id))f;
+
+// Side-effects on some if some;
+- (void)foreach:(void (^)(id))effect;
 
 // Returns Some value if either is of this projection, else returns None
 - (FKOption *)toOption;

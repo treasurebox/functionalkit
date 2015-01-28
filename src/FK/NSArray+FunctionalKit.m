@@ -165,4 +165,20 @@
     return  [self count] == 0 ? [FKOption none] : [FKOption some:[self objectAtIndex:0]];
 }
 
+- (NSArray *)zip:(NSArray *)rhs {
+    NSMutableArray *zipped = [NSMutableArray array];
+    NSEnumerator *enumL = [self objectEnumerator];
+    NSEnumerator *enumR = [rhs objectEnumerator];
+    
+    while (true) {
+        id l = [enumL nextObject];
+        id r = [enumR nextObject];
+        if (l == nil || r == nil) {
+            break;
+        }
+        [zipped addObject:[FKP2 _1:l _2:r]];
+    }
+    return zipped;
+}
+
 @end

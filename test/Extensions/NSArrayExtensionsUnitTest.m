@@ -148,4 +148,16 @@
     return [string isEqual:@"1"];
 }
 
+- (void)testZip
+{
+    NSArray *left = @[@"a",@"b",@"c"];
+    NSArray *right = @[@1,@2];
+    NSArray *zipped = [left zip:right];
+    STAssertEquals((NSInteger)[zipped count], (NSInteger)2, nil);
+    STAssertEqualObjects([zipped[0] _1], @"a", nil);
+    STAssertEqualObjects([zipped[0] _2], @1, nil);
+    STAssertEqualObjects([zipped[1] _1], @"b", nil);
+    STAssertEqualObjects([zipped[1] _2], @2, nil);
+}
+
 @end

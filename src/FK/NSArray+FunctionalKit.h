@@ -82,4 +82,7 @@
 // Returns an option projection of this array; None if empty, or the first element in Some.
 - (FKOption *)toOption;
 
+// zip takes two arrays and returns an array of corresponding FKP2 pairs. If one input list is short, excess elements of the longer array are discarded.
+- (NSArray *)zip:(NSArray *)rhs;
+
 @end

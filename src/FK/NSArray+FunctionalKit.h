@@ -85,4 +85,10 @@
 // zip takes two arrays and returns an array of corresponding FKP2 pairs. If one input list is short, excess elements of the longer array are discarded.
 - (NSArray *)zip:(NSArray *)rhs;
 
+// Returns a list of length n with x the value of every element.
++ (NSArray *)replicate:(NSUInteger)n x:(id)x;
+
+// Maps values to zero or more values each, then concatenates the result
+- (NSArray *)bind:(NSArray *(^)(id))f;
+
 @end

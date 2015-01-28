@@ -160,4 +160,21 @@
     STAssertEqualObjects([zipped[1] _2], @2, nil);
 }
 
+- (void)testReplicate
+{
+    NSArray *replicated = [NSArray replicate:2 x:@"x"];
+    STAssertEquals((NSInteger)[replicated count], (NSInteger)2, nil);
+    STAssertEqualObjects(replicated[0], @"x", nil);
+    STAssertEqualObjects(replicated[1], @"x", nil);
+}
+
+- (void)testBind
+{
+    NSArray *bound = [@[@0,@2,@1] bind:^(NSNumber *n){return [NSArray replicate:[n intValue] x:n];}];
+    STAssertEquals((NSInteger)[bound count], (NSInteger)3, nil);
+    STAssertEqualObjects(bound[0], @2, nil);
+    STAssertEqualObjects(bound[1], @2, nil);
+    STAssertEqualObjects(bound[2], @1, nil);
+}
+
 @end

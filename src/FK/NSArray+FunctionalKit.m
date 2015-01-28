@@ -181,4 +181,18 @@
     return zipped;
 }
 
++ (NSArray *)replicate:(NSUInteger)n x:(id)x
+{
+    NSMutableArray *array = [NSMutableArray array];
+    for (int i = 0 ; i < n ; ++i) {
+        [array addObject:x];
+    }
+    return array;
+}
+
+- (NSArray *)bind:(NSArray *(^)(id))f
+{
+    return [NSArray concat:[self map:f]];
+}
+
 @end

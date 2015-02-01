@@ -18,3 +18,5 @@
 // Extensions
 #import "FK/NSArray+FunctionalKit.h"
 #import "FK/NSDictionary+FunctionalKit.h"
+
+#import "FK/FKMacros.h"
